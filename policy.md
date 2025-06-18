@@ -101,7 +101,7 @@ Let $\pi_\theta$ be a policy parameterized by $\theta$. What we’re after is th
 
 ---
 
-In slightly more precise terms: we’re trying to find a ${\theta^*}$ such that when we execute the corresponding policy $\pi_{\theta^*}$, the trajectories it generates yield a higher expected return than trajectories from any other policy $ \pi_\theta $ where $ \theta \neq \theta^* $.
+In slightly more precise terms: we’re trying to find a ${\theta^{*}}$ such that when we execute the corresponding policy $\pi_{\theta^{*}}$, the trajectories it generates yield a higher expected return than trajectories from any other policy $ \pi_\theta $ where $ \theta \neq \theta^{*} $.
 
 So the goal is basically:
 
