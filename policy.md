@@ -64,8 +64,7 @@ f'(x) &= \frac{d}{dx}(2x^2 - 20x) \\
 \end{align*}
 $$
 
-> *Think of a straw attached to a bicycle wheel:  
-> at the top or bottom of its rotation, the straw is perfectly horizontal — the slope is zero.*
+> *Think of a straw attached to an invisible bicycle wheel and we are interested in finding out the top or the bottom of the wheel and as easy as it seems, it's only at the top or bottom of its rotation, the straw is perfectly parallel with the ground (the slope is zero) indicating the points we're interested in*
 
 ---
 
@@ -96,16 +95,13 @@ From my perspective — we should thank the function for being **differentiable*
 
 ## 🚀 From Differentiable Functions to Policy Gradients
 
-I think we've strayed far enough for a decent recap,  
-but let’s get back to **Policies** and their **gradients**.
+I think we've strayed far enough for a decent recap,   but let’s get back to **Policies** and their **gradients**.
 
-Let $\pi_\theta$ be a policy parameterized by $\theta$.  
-What we’re after is the *best* $\theta$, which we’ll call $\theta^*$ —  
-the one that maximizes the **expected return**.
+Let $\pi_\theta$ be a policy parameterized by $\theta$. What we’re after is the *best* $\theta$, which we’ll call $\theta^*$ — the one that maximizes the **expected return**.
 
 ---
 
-In slightly more precise terms: we’re trying to find a $\theta^*$ such that when we execute the corresponding policy $\pi_{\theta^*}$, the trajectories it generates yield a higher expected return than trajectories from any other policy $\pi_\theta$ where $\theta \neq \theta^*$.
+In slightly more precise terms: we’re trying to find a ${\theta^*}$ such that when we execute the corresponding policy $\pi_{\theta^*}$, the trajectories it generates yield a higher expected return than trajectories from any other policy $ \pi_\theta $ where $ \theta \neq \theta^* $.
 
 So the goal is basically:
 
