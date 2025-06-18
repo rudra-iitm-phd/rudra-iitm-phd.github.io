@@ -9,8 +9,10 @@ Click below to dive into specific topics:
 
 ## 🧠 About Me
 
-I'm a researcher interested in the intersection of reinforcement learning, planning, and logical reasoning. Currently working under the guidance of [Dr. Balaraman Ravindran](https://www.cse.iitm.ac.in/~ravindran/) at IIT Madras, I focus on developing intelligent agents capable of structured decision-making under uncertainty.
+I am a PhD student at IIT Madras currently working on Reinforcement Learning under the guidance of [Dr. Balaraman Ravindran](https://www.cse.iitm.ac.in/~ravindran/).This blog serves as a curated collection of my notes, tutorials, and some random ideas/inspirations. I keep this blog updated, so feel free to point out mistakes or collaborate at any part of the iteration.
 
-This blog serves as a curated collection of my notes, tutorials, and ideas.
 
-Feel free to explore and reach out if you find something interesting!
+
+## 🔗 Connect
+
+- [LinkedIn → Rudra Sarkar](https://www.linkedin.com/in/rudra-sarkar-a411891a0/)
