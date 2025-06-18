@@ -1,15 +1,25 @@
-<script>
-window.MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']]
-  }
-};
+<script type="text/javascript">
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      renderActions: {
+        findScript: [10, function (doc) {
+          // escape Markdown italics (*) inside math
+          for (const script of document.querySelectorAll('script[type^="math/tex"]')) {
+            script.text = script.text.replace(/\^([^\s^_{}\\])/g, '^{$1}');
+          }
+        }, '']
+      }
+    }
+  };
 </script>
-<script type="text/javascript"
-  id="MathJax-script"
-  async
-  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-</script>
+
+<script async id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
 
 # 🎯 Policy Gradient: *L’Equazione Elegante*
 
@@ -101,7 +111,7 @@ Let $\pi_\theta$ be a policy parameterized by $\theta$. What we’re after is th
 
 ---
 
-In slightly more precise terms: we’re trying to find a $\theta^{*}$ such that when we execute the corresponding policy $\pi_\theta^{*}$, the trajectories it generates yield a higher expected return than trajectories from any other policy $ \pi_\theta $ where $ \theta \neq \theta^{*} $.
+In slightly more precise terms: we’re trying to find a $\theta ^{*}$ such that when we execute the corresponding policy $\pi_\theta^{*}$, the trajectories it generates yield a higher expected return than trajectories from any other policy $\pi_\theta $ where $ \theta \neq \theta^{*} $.
 
 So the goal is basically:
 
