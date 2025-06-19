@@ -31,10 +31,12 @@ So, the goal here is to explain the derivation in a way that’s digestible for 
 
 ---
 
-So first of all what's a policy ? A policy $\pi$ is simply an agent's way of behaving in an environment. More specifically, if we consider $A = \{a_1, \cdots, a_k\}$ to be the set of actions applicable in a particular state $s_t$ of an environment (at timestep $t$), then the policy specifies a probability distribution over these $k$ actions. 
+So first of all what's a policy ? A policy $\pi$ is simply an agent's way of behaving in an environment. More specifically, if we consider $A$ = {$a_1, \cdots, a_k$ } to be the set of actions applicable in a particular state $s_t$ of an environment (at timestep $t$), then the policy specifies a probability distribution over these $k$ actions. 
+
 $$
 \pi(a_t=a_i|s_t)=P(a_i|s_t) \ \ \ \ i\in\{1, \cdots, k\}
 $$
+
 Now, the question is how do we find that optimal policy ? More specifically what makes a policy optimal ? These are some of the questions we need to answer. 
 
 Since we are introducing terms in the line of optimality, we need to first quantify the poilicies. A viable method would be to assess the performance of a policy by finding out the expected return obtained from behaving according to the policy in a particular environment. In other words, the performance of a policy $\eta(\pi)$ can be assessed by running the policy multiple times (ideally infinite) and summing the rewards obtained at each time step $r(s_t, a_t)$ until termination. 
@@ -51,13 +53,13 @@ $$
 $$
 > Note : Generally we discount the rewards in the form of $\sum_{t=1}^T\gamma^{t-1} r(s_t, a_t)$, and here we have kept $\gamma=1$
 
-With this, we now have a method to quantify the performance of a policy $\pi$. Now what makes a policy optimal? If $\Pi=\left\{\pi_1, \pi_2, \cdots, \pi_\infty \right\}$ is the space of all policies, the optimal policy $\pi^\ast$ is the one for which the expected return is the highest. In other words,
+With this, we now have a method to quantify the performance of a policy $\pi$. Now what makes a policy optimal? If $\Pi$={ $\pi_1, \pi_2, \cdots, \pi_\infty $ } is the space of all policies, the optimal policy $\pi^\ast$ is the one for which the expected return is the highest. In other words,
 
 $$
 \pi^\ast = \arg \max_{\pi\sim \Pi} \eta(\pi)
 $$
 
-But $\Pi$ is continous and needless to point out that noones's willing to check each policy out one by one until the end of time when still infinitely more  policies will be left unchecked. So, what do we do ? Well we can parametrize the policy with $\theta$ i.e we can model the policy as a neural network $f$ the parameters of which are $\theta$ and then use *Gradient Ascent* to update the parameters. Also now our search space is no more $\Pi$, as some policies might never get modelled by the network. Therefore our search space is now $\tilde{\Pi}\subseteq \Pi$ where $\tilde{\Pi} = \left\{\pi_\theta\mid \pi_\theta = f(\theta) , \ \ \ \pi_\theta \in \Pi, \ \ \ \forall \theta \in \Theta \right\}$. By reducing the search space, we can't gurantee global optimality anymore, however its better than waiting till the end of time and that too for solving one environment. Also, our new modified objective is formulated as :
+But $\Pi$ is continous and needless to point out that noones's willing to check each policy out one by one until the end of time when still infinitely more  policies will be left unchecked. So, what do we do ? Well we can parametrize the policy with $\theta$ i.e we can model the policy as a neural network $f$ the parameters of which are $\theta$ and then use *Gradient Ascent* to update the parameters. Also now our search space is no more $\Pi$, as some policies might never get modelled by the network. Therefore our search space is now $\tilde{\Pi}\subseteq \Pi$ where $\tilde{\Pi}$ = { $\pi_\theta\mid \pi_\theta = f(\theta) , \ \ \ \pi_\theta \in \Pi, \ \ \ \forall \theta \in \Theta $ }. By reducing the search space, we can't gurantee global optimality anymore, however its better than waiting till the end of time and that too for solving one environment. Also, our new modified objective is formulated as :
 
 $$
 \theta^* = \arg\max_{\theta \in \Theta} \ \mathbb{E}_{\tau \sim \rho_\theta(\tau)} \left[ \sum_{t=1}^T r(s_t, a_t) \right] = \arg\max_{\theta \in \Theta} \ \mathbb{E}_{\tau \sim \rho_\theta(\tau)} \left[ r(\tau) \right]
