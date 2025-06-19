@@ -172,25 +172,27 @@ $$
 &= \sum_{a} \bigl( Q_{\pi_{\theta}}(s, a) \nabla_{\theta} \pi_{\theta}(a|s) + \pi_{\theta}(a|s) \nabla_{\theta} Q_{\pi_{\theta}}(s, a) \bigr) \\
 &= \sum_{a} \bigl( Q_{\pi_{\theta}}(s, a) \nabla_{\theta} \pi_{\theta}(a|s) + \pi_{\theta}(a|s) \nabla_{\theta} \sum_{s', r} P(s', r \mid s, a)\bigl[r + V_{\pi_\theta}(s')\bigr] \bigr) \\
 &= \sum_{a} \bigl( Q_{\pi_{\theta}}(s, a) \nabla_{\theta} \pi_{\theta}(a|s) + \pi_{\theta}(a|s) \sum_{s'} P(s' \mid s, a) \nabla_{\theta} V_{\pi_\theta}(s') \bigr) \\
-&\quad \text{\footnotesize$\bigl\{ \because \sum_{s', r} P(s', r \mid s, a) \nabla_{\theta} r = 0 \bigr\}$}
+&\quad \text{$\bigl\{ \because \sum_{s', r} P(s', r \mid s, a) \nabla_{\theta} r = 0 \bigr\}$}
 \end{align*}
 $$
 
-Let $\Delta(s) = \sum_{a}Q_{\pi_{\theta}}(s, a)\nabla_{\theta}\pi_{\theta}(a|s)$
+Let $\psi(s) = \sum_{a}Q_{\pi_{\theta}}(s, a)\nabla_{\theta}\pi_{\theta}(a\mid s)$
 
 Hence , we have : 
 $$
 \begin{align*}
     
-  \nabla_{\theta}V_{\pi_{\theta}}(s) = \Delta(s) + \sum_{a}\pi_{\theta}(a|s)\sum_{s'}P(s'|s, a)\nabla_{\theta}V_{\pi_\theta}(s')
+  \nabla_{\theta}V_{\pi_{\theta}}(s) = \psi(s) + \sum_{a}\pi_{\theta}(a|s)\sum_{s'}P(s'|s, a)\nabla_{\theta}V_{\pi_\theta}(s')
 
 \end{align*}
 $$
+
 Using this recursive formulation, we can unroll the equation as : 
+
 $$
 \begin{align*}
     
-  \nabla_{\theta}V_{\pi_{\theta}}(s) = \Delta(s) + \sum_{a}\pi_{\theta}(a|s)\sum_{s'}P(s'|s, a)\bigl(\Delta(s') + \sum_{a'}\pi_{\theta}(a'|s')\sum_{s''}P(s''|s', a')\nabla_{\theta}V_{\pi_\theta}(s'')\bigr)
+  \nabla_{\theta}V_{\pi_{\theta}}(s) = \psi(s) + \sum_{a}\pi_{\theta}(a|s)\sum_{s'}P(s'|s, a)\bigl(\psi(s') + \sum_{a'}\pi_{\theta}(a'|s')\sum_{s''}P(s''|s', a')\nabla_{\theta}V_{\pi_\theta}(s'')\bigr)
 
 \end{align*}
 $$
@@ -211,11 +213,11 @@ Coming back to the proof:
 $$
   \begin{align*}
 
-  \nabla_{\theta}V_{\pi_{\theta}}(s) &= \Delta(s) + \sum_{a}\pi_{\theta}(a|s)\sum_{s'}P(s'|s, a)\bigg(\Delta(s') + \sum_{a'}\pi_{\theta}(a'|s')\sum_{s''}P(s''|s', a')\nabla_{\theta}V_{\pi_\theta}(s'')\bigg)\\
-  &= \Delta(s) + \sum_{s'}\phi_{\pi_\theta}(s\rightarrow s', 1)\Delta(s') + \sum_{s''}\phi_{\pi_\theta}(s\rightarrow s'', 2)\nabla_{\theta}V_{\pi_\theta}(s'')\\
-  &= \Delta(s) + \sum_{s'}\phi_{\pi_\theta}(s\rightarrow s', 1)\Delta(s') + \sum_{s''}\phi_{\pi_\theta}(s\rightarrow s'', 2)\Delta(s'') + \cdots \infty\\
-  &= \phi_{\pi_\theta}(s\rightarrow s, 0)\Delta(s) + \sum_{s'}\phi_{\pi_\theta}(s\rightarrow s', 1)\Delta(s') + \sum_{s''}\phi_{\pi_\theta}(s\rightarrow s'', 2)\Delta(s'') + \cdots \infty\\
-  &= \sum_{x\in S}\sum_{k=0}^\infty\phi_{\pi_\theta}(s\rightarrow x, k)\Delta(x)
+  \nabla_{\theta}V_{\pi_{\theta}}(s) &= \psi(s) + \sum_{a}\pi_{\theta}(a|s)\sum_{s'}P(s'|s, a)\bigg(\psi(s') + \sum_{a'}\pi_{\theta}(a'|s')\sum_{s''}P(s''|s', a')\nabla_{\theta}V_{\pi_\theta}(s'')\bigg)\\
+  &= \psi(s) + \sum_{s'}\phi_{\pi_\theta}(s\rightarrow s', 1)\psi(s') + \sum_{s''}\phi_{\pi_\theta}(s\rightarrow s'', 2)\nabla_{\theta}V_{\pi_\theta}(s'')\\
+  &= \psi(s) + \sum_{s'}\phi_{\pi_\theta}(s\rightarrow s', 1)\psi(s') + \sum_{s''}\phi_{\pi_\theta}(s\rightarrow s'', 2)\psi(s'') + \cdots \infty\\
+  &= \phi_{\pi_\theta}(s\rightarrow s, 0)\psi(s) + \sum_{s'}\phi_{\pi_\theta}(s\rightarrow s', 1)\psi(s') + \sum_{s''}\phi_{\pi_\theta}(s\rightarrow s'', 2)\psi(s'') + \cdots \infty\\
+  &= \sum_{x\in S}\sum_{k=0}^\infty\phi_{\pi_\theta}(s\rightarrow x, k)\psi(x)
 
 \end{align*}
 $$
@@ -225,7 +227,7 @@ $$
 
   \begin{align*}
         
-            n(s) &= h(s)+\sum_{s'}n(s')\sum_{a}\pi_\theta(a|s')P(s|s',a)\\
+    n(s) &= h(s)+\sum_{s'}n(s')\sum_{a}\pi_\theta(a|s')P(s|s',a)\\
     &=h(s)+\sum_{s'}n(s')\phi_{\pi_\theta}(s'\rightarrow s, 1)
         
   \end{align*}    
@@ -274,8 +276,8 @@ Coming back to our policy gradient proof, we can now rewrite the equation as :
 $$
 
     \begin{align*}
-  \nabla_{\theta}V_{\pi_{\theta}}(s) &= \sum_{x\in S}\sum_{k=0}^\infty\phi_{\pi_\theta}(s\rightarrow x, k)\Delta(x)\\
-  &=\sum_{x\in S}n(x)\Delta(x)\\
+  \nabla_{\theta}V_{\pi_{\theta}}(s) &= \sum_{x\in S}\sum_{k=0}^\infty\phi_{\pi_\theta}(s\rightarrow x, k)\psi(x)\\
+  &=\sum_{x\in S}n(x)\psi(x)\\
   &=\sum_{x\in S}n(x)\sum_{a}Q_{\pi_{\theta}}(x, a)\nabla_{\theta}\pi_{\theta}(a|x)\\
   &=\bigg(\sum_{x'\in S}n(x')\bigg)\sum_{x\in S}\frac{n(x)}{\sum_{x'\in S}n(x')}\sum_{a}Q_{\pi_{\theta}}(x, a)\nabla_{\theta}\pi_{\theta}(a|x)\\
   &\propto\sum_{x\in S}\frac{n(x)}{\sum_{x'\in S}n(x')}\sum_{a}Q_{\pi_{\theta}}(x, a)\nabla_{\theta}\pi_{\theta}(a|x)\\
