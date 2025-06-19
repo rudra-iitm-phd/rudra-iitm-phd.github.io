@@ -35,7 +35,9 @@ Honestly, this is also my way of pushing myself to understand things better —
 to the point where I can explain them without using fancy terminology at all.  
 
 But hey, this is just *iteration one*, and I’ll keep improving it as I go.  
-So, pardon me — and thanks in advance for bearing with me.
+So, pardon me — and thanks in advance for bearing with me. 
+
+>These notes are based from the lectures of Sergey Levine [^1].
 
 ---
 
@@ -172,10 +174,24 @@ Therefore, let's calculate the gradient of the policy:
 
 $$
 \begin{align*}
-\nabla_\theta \mathbb{E}_{\tau \sim \rho_\theta(\tau)} \left[ \sum_{t=1}^T r(s_t, a_t) \right] &= \nabla_\theta \int \rho_\theta(\tau)\cdot r(\tau) \,d\tau \\
+\nabla_\theta \mathbb{E}_{\tau \sim \rho_\theta(\tau)} \left[ \sum_{t=1}^T r(s_t, a_t) \right] &= \nabla_\theta \int \rho_\theta(\tau)\cdot r(\tau) \,d\tau & r(\tau) =  \sum_{t=1}^T r(s_t, a_t)\\
 &= \int \nabla_\theta \rho_\theta(\tau)\cdot r(\tau) \,d\tau \\
 &= \int \rho_\theta(\tau) \frac{\nabla_\theta \rho_\theta(\tau)}{\rho_\theta(\tau)} \cdot r(\tau) \,d\tau \\
 &= \int \nabla_\theta \log \rho_\theta(\tau)\cdot r(\tau) \,d\tau \\
 &= \mathbb{E}_{\tau \sim \rho_\theta(\tau)} \left[ \nabla_\theta \log \rho_\theta(\tau)\cdot r(\tau) \right]
 \end{align*}
 $$
+Let's unroll $\rho_\theta(\tau)$ and calculate its derivative:
+$$
+\begin{align*}
+\nabla_\theta \log \rho_\theta(\tau)&=\nabla_\theta \log \left[P(s_1)\prod_{t=1}^{T} \pi_\theta(a_t \mid s_t) \cdot P(s_{t+1} \mid s_t, a_t)\right]\\
+&=\nabla_\theta \left[\log P(s_1)+\sum_{t=1}^{T} \log\pi_\theta(a_t \mid s_t) +\sum_{t=1}^{T} \log P(s_{t+1} \mid s_t, a_t)\right]\\
+&=\nabla_\theta\left[\sum_{t=1}^T\log\pi_\theta(a_t \mid s_t) \right]
+\end{align*}
+$$
+
+## References
+
+[^1]: [Sergey Levine RAIL lectures from UC Berkeley](https://rail.eecs.berkeley.edu/deeprlcourse/).
+[^2]:
+
