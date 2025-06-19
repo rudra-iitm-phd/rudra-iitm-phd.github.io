@@ -51,14 +51,18 @@ $$
 $$
 > Note : Generally we discount the rewards in the form of $\sum_{t=1}^T\gamma^{t-1} r(s_t, a_t)$, and here we have kept $\gamma=1$
 
-With this, we now have a method to quantify the performance of a policy $\pi$. Now what makes a policy optimal? If $\Pi=\{\pi_1, \pi_2, \cdots, \pi_\infty \}$ is the space of all policies, the optimal policy $\pi^\ast$ is the one for which the expected return is the highest. In other words,
+With this, we now have a method to quantify the performance of a policy $\pi$. Now what makes a policy optimal? If $\Pi=\left\{\pi_1, \pi_2, \cdots, \pi_\infty \right\}$ is the space of all policies, the optimal policy $\pi^\ast$ is the one for which the expected return is the highest. In other words,
+
 $$
 \pi^\ast = \arg \max_{\pi\sim \Pi} \eta(\pi)
 $$
-But $\Pi$ is continous and needless to point out that noones's willing to check each policy out one by one until the end of time when still infinitely more  policies will be left unchecked. So, what do we do ? Well we can parametrize the policy with $\theta$ i.e we can model the policy as a neural network $f$ the parameters of which are $\theta$ and then use *Gradient Ascent* to update the parameters. Also now our search space is no more $\Pi$, as some policies might never get modelled by the network. Therefore our search space is now $\tilde{\Pi}\subseteq \Pi$ where $\tilde{\Pi} = \{\pi_\theta\mid \pi_\theta = f(\theta) , \ \ \ \pi_\theta \in \Pi, \ \ \ \forall \theta \in \Theta \}$. By reducing the search space, we can't gurantee global optimality anymore, however its better than waiting till the end of time and that too for solving one environment. Also, our new modified objective is formulated as :
+
+But $\Pi$ is continous and needless to point out that noones's willing to check each policy out one by one until the end of time when still infinitely more  policies will be left unchecked. So, what do we do ? Well we can parametrize the policy with $\theta$ i.e we can model the policy as a neural network $f$ the parameters of which are $\theta$ and then use *Gradient Ascent* to update the parameters. Also now our search space is no more $\Pi$, as some policies might never get modelled by the network. Therefore our search space is now $\tilde{\Pi}\subseteq \Pi$ where $\tilde{\Pi} = \left\{\pi_\theta\mid \pi_\theta = f(\theta) , \ \ \ \pi_\theta \in \Pi, \ \ \ \forall \theta \in \Theta \right\}$. By reducing the search space, we can't gurantee global optimality anymore, however its better than waiting till the end of time and that too for solving one environment. Also, our new modified objective is formulated as :
+
 $$
 \theta^* = \arg\max_{\theta \in \Theta} \ \mathbb{E}_{\tau \sim \rho_\theta(\tau)} \left[ \sum_{t=1}^T r(s_t, a_t) \right] = \arg\max_{\theta \in \Theta} \ \mathbb{E}_{\tau \sim \rho_\theta(\tau)} \left[ r(\tau) \right]
 $$
+
 >Note : $\rho_\theta(\tau) = P(s_1)\prod_{t=1}^{T} \pi_\theta(a_t \mid s_t) \cdot P(s_{t+1} \mid s_t, a_t)$
 
 Now that we have some notion about the optimality of a policy we need to figure out how to update $\theta$ so that we reach $\theta^\ast$. As we have mentioned before that we'll use Gradient Ascent for making the updates but have not quite justified it. The reason for making the updates in the direction of the ascent (and not descent) is simply due to our maximization objective i.e *We need to follow the slope to find the peak*. And secondly, we need to figure out the most important part, the Gradient !
@@ -99,6 +103,7 @@ $$
 &\approx\frac{1}{m}\sum_{i=1}^m\left[\left(\sum_{t=1}^T \nabla_\theta\log\pi_\theta(a_t^i \mid s_t^i) \right) \left(\sum_{t=1}^T r(s_t^i, a_t^i)\right) \right]
 \end{align*}
 $$
+
 > Note : In practice the empirical estimate is used which is practiced by averaging over $m$ trajectories and $s_t^i, a_t^i$ represents the state and action pair at time step $t$ in trajectory $i$
 
 So there we have it, the gradient of the performance of the policy $\pi_\theta$. How do we implement this algorithm ? 
