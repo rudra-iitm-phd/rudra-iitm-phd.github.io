@@ -169,10 +169,10 @@ Let's derive the gradient now
 $$
 \begin{align*}
 \nabla_{\theta}\eta(\theta) &= \nabla_{\theta}V_{\pi_{\theta}}(s) \\
-&= \sum_{a} \bigl( Q_{\pi_{\theta}}(s, a) \nabla_{\theta} \pi_{\theta}(a|s) + \pi_{\theta}(a|s) \nabla_{\theta} Q_{\pi_{\theta}}(s, a) \bigr) \\
-&= \sum_{a} \bigl( Q_{\pi_{\theta}}(s, a) \nabla_{\theta} \pi_{\theta}(a|s) + \pi_{\theta}(a|s) \nabla_{\theta} \sum_{s', r} P(s', r \mid s, a)\bigl[r + V_{\pi_\theta}(s')\bigr] \bigr) \\
-&= \sum_{a} \bigl( Q_{\pi_{\theta}}(s, a) \nabla_{\theta} \pi_{\theta}(a|s) + \pi_{\theta}(a|s) \sum_{s'} P(s' \mid s, a) \nabla_{\theta} V_{\pi_\theta}(s') \bigr) \\
-&\quad \text{$\bigl\{ \because \sum_{s', r} P(s', r \mid s, a) \nabla_{\theta} r = 0 \bigr\}$}
+&= \sum_{a} \left( Q_{\pi_{\theta}}(s, a) \nabla_{\theta} \pi_{\theta}(a|s) + \pi_{\theta}(a|s) \nabla_{\theta} Q_{\pi_{\theta}}(s, a) \right) \\
+&= \sum_{a} \left( Q_{\pi_{\theta}}(s, a) \nabla_{\theta} \pi_{\theta}(a|s) + \pi_{\theta}(a|s) \nabla_{\theta} \sum_{s', r} P(s', r \mid s, a)\left[r + V_{\pi_\theta}(s')\right] \right) \\
+&= \sum_{a} \left( Q_{\pi_{\theta}}(s, a) \nabla_{\theta} \pi_{\theta}(a|s) + \pi_{\theta}(a|s) \sum_{s'} P(s' \mid s, a) \nabla_{\theta} V_{\pi_\theta}(s') \right) \\
+&\quad \text{$\left\{ \because \sum_{s', r} P(s', r \mid s, a) \nabla_{\theta} r = 0 \right\}$}
 \end{align*}
 $$
 
@@ -181,19 +181,15 @@ Let $\psi(s) = \sum_{a}Q_{\pi_{\theta}}(s, a)\nabla_{\theta}\pi_{\theta}(a\mid s
 Hence , we have : 
 $$
 \begin{align*}
-    
   \nabla_{\theta}V_{\pi_{\theta}}(s) = \psi(s) + \sum_{a}\pi_{\theta}(a|s)\sum_{s'}P(s'|s, a)\nabla_{\theta}V_{\pi_\theta}(s')
-
 \end{align*}
 $$
 
 Using this recursive formulation, we can unroll the equation as : 
 
 $$
-\begin{align*}
-    
-  \nabla_{\theta}V_{\pi_{\theta}}(s) = \psi(s) + \sum_{a}\pi_{\theta}(a|s)\sum_{s'}P(s'|s, a)\bigl(\psi(s') + \sum_{a'}\pi_{\theta}(a'|s')\sum_{s''}P(s''|s', a')\nabla_{\theta}V_{\pi_\theta}(s'')\bigr)
-
+\begin{align*}  
+  \nabla_{\theta}V_{\pi_{\theta}}(s) = \psi(s) + \sum_{a}\pi_{\theta}(a|s)\sum_{s'}P(s'|s, a)\left(\psi(s') + \sum_{a'}\pi_{\theta}(a'|s')\sum_{s''}P(s''|s', a')\nabla_{\theta}V_{\pi_\theta}(s'')\right)
 \end{align*}
 $$
 
@@ -212,24 +208,20 @@ Coming back to the proof:
 
 $$
   \begin{align*}
-
   \nabla_{\theta}V_{\pi_{\theta}}(s) &= \psi(s) + \sum_{a}\pi_{\theta}(a|s)\sum_{s'}P(s'|s, a)\bigg(\psi(s') + \sum_{a'}\pi_{\theta}(a'|s')\sum_{s''}P(s''|s', a')\nabla_{\theta}V_{\pi_\theta}(s'')\bigg)\\
   &= \psi(s) + \sum_{s'}\phi_{\pi_\theta}(s\rightarrow s', 1)\psi(s') + \sum_{s''}\phi_{\pi_\theta}(s\rightarrow s'', 2)\nabla_{\theta}V_{\pi_\theta}(s'')\\
   &= \psi(s) + \sum_{s'}\phi_{\pi_\theta}(s\rightarrow s', 1)\psi(s') + \sum_{s''}\phi_{\pi_\theta}(s\rightarrow s'', 2)\psi(s'') + \cdots \infty\\
   &= \phi_{\pi_\theta}(s\rightarrow s, 0)\psi(s) + \sum_{s'}\phi_{\pi_\theta}(s\rightarrow s', 1)\psi(s') + \sum_{s''}\phi_{\pi_\theta}(s\rightarrow s'', 2)\psi(s'') + \cdots \infty\\
   &= \sum_{x\in S}\sum_{k=0}^\infty\phi_{\pi_\theta}(s\rightarrow x, k)\psi(x)
-
 \end{align*}
 $$
 
 Let $n(s)$ denote the number of time steps spent on average in state $s$ in a single episode. Formally, 
 $$
 
-  \begin{align*}
-        
+  \begin{align*}        
     n(s) &= h(s)+\sum_{s'}n(s')\sum_{a}\pi_\theta(a|s')P(s|s',a)\\
-    &=h(s)+\sum_{s'}n(s')\phi_{\pi_\theta}(s'\rightarrow s, 1)
-        
+    &=h(s)+\sum_{s'}n(s')\phi_{\pi_\theta}(s'\rightarrow s, 1)       
   \end{align*}    
 
 $$
@@ -237,26 +229,22 @@ $$
 $h(s)$ denotes the probability that the episode begins in a state $s$
 
 $$
-    \begin{align*}
-        
-            n(s)&=h(s)+\sum_{s'}n(s')\phi_{\pi_\theta}(s'\rightarrow s, 1)\\
-            &= h(s)+\sum_{s'}\phi_{\pi_\theta}(s'\rightarrow s, 1)\bigg(h(s')+\sum_{s''}n(s'')\phi_{\pi_\theta}(s''\rightarrow s', 1)\bigg)\\
-            &= h(s)+\sum_{s'}\phi_{\pi_\theta}(s'\rightarrow s, 1)h(s')+\sum_{s''}\phi_{\pi_\theta}(s''\rightarrow s, 2)n(s'')\\
-             &= h(s)+\sum_{s'}\phi_{\pi_\theta}(s'\rightarrow s, 1)h(s')+\sum_{s''}\phi_{\pi_\theta}(s''\rightarrow s, 2)h(s'')+\cdots\infty\\
-              &= \sum_{s'}\sum_{k=0}^\infty \phi_{\pi_\theta}(s'\rightarrow s, k)h(s')
-        
+    \begin{align*}      
+      n(s)&=h(s)+\sum_{s'}n(s')\phi_{\pi_\theta}(s'\rightarrow s, 1)\\
+      &= h(s)+\sum_{s'}\phi_{\pi_\theta}(s'\rightarrow s, 1)\bigg(h(s')+\sum_{s''}n(s'')\phi_{\pi_\theta}(s''\rightarrow s', 1)\bigg)\\
+      &= h(s)+\sum_{s'}\phi_{\pi_\theta}(s'\rightarrow s, 1)h(s')+\sum_{s''}\phi_{\pi_\theta}(s''\rightarrow s, 2)n(s'')\\
+        &= h(s)+\sum_{s'}\phi_{\pi_\theta}(s'\rightarrow s, 1)h(s')+\sum_{s''}\phi_{\pi_\theta}(s''\rightarrow s, 2)h(s'')+\cdots\infty\\
+        &= \sum_{s'}\sum_{k=0}^\infty \phi_{\pi_\theta}(s'\rightarrow s, k)h(s')      
     \end{align*}    
 $$
 
 Since we assumed that the episodes start from a particular non random state $s$, we have therefore :
 $$
     \begin{align*}
-        
             h(s) = \begin{cases}
                 1 &\text{if }s=s\\
                 0 &\text{if }s\neq s
-            \end{cases}
-      
+            \end{cases}   
     \end{align*}
 $$
 
@@ -274,7 +262,6 @@ $$
 Coming back to our policy gradient proof, we can now rewrite the equation as :
 
 $$
-
     \begin{align*}
   \nabla_{\theta}V_{\pi_{\theta}}(s) &= \sum_{x\in S}\sum_{k=0}^\infty\phi_{\pi_\theta}(s\rightarrow x, k)\psi(x)\\
   &=\sum_{x\in S}n(x)\psi(x)\\
@@ -283,7 +270,6 @@ $$
   &\propto\sum_{x\in S}\frac{n(x)}{\sum_{x'\in S}n(x')}\sum_{a}Q_{\pi_{\theta}}(x, a)\nabla_{\theta}\pi_{\theta}(a|x)\\
   &=\sum_{x\in S}\mu_{\pi_{\theta}}(x)\sum_{a}Q_{\pi_{\theta}}(x, a)\nabla_{\theta}\pi_{\theta}(a|x)
     \end{align*}
-
 $$
 
 >Note: that the reason for the spot division is because of the possibility of the probability values being greater than one (for a fixed start environment $n(x) > 1$), so we had to normalize it. $\mu_{\pi_{\theta}}$ is the on-policy distribution (the fraction of time spent in each state) under policy $\pi_\theta$. 
