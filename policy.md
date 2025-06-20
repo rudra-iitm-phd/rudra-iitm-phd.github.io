@@ -4,6 +4,7 @@ layout: default
 
 <link rel="stylesheet" href="/assets/theme.css">
 <script src="/assets/theme-toggle.js" defer></script>
+<link rel="icon" href="/assets/favicon.png" type="image/png">
 
 <script type="text/javascript">
   window.MathJax = {
