@@ -1,40 +1,20 @@
 title: Rudra's Blog
 description: A blog for dumping my notes and random thoughts
-baseurl: "" # No subdirectory since this is youruser.github.io
-url: "https://rudra-iitm-phd.github.io"
-
-# Theme - pick any from https://github.com/topics/jekyll-theme
-remote_theme: jekyll/minima
-
-# # Author info (optional)
-# author:
-#   name: Your Name
-#   email: your.email@example.com
-
-# # Social (optional)
-# social_links:
-#   github: yourusername
-#   twitter: yourhandle
-#   linkedin: yourname
-
-# Enable these if your theme uses them
-plugins:
-  - jekyll-feed
-  - jekyll-seo-tag
-  - jekyll-remote-theme
-
-# Markdown & highlighter
+# baseurl: "" # No subdirectory since this is youruser.github.io
+# logo:
 markdown: kramdown
-highlighter: rouge
+theme: jekyll-theme-minima  # or whatever your theme is
+plugins:
+  - jekyll-seo-tag
 
-# Exclude these files from build
-exclude:
-  - Gemfile
-  - Gemfile.lock
-  - node_modules
-  - vendor
+# Add this if not already present
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "default"
 
-# Build settings
-future: true
-lsi: false
-incremental: false
+# Allow custom assets
+include:
+  - assets
