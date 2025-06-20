@@ -1,3 +1,11 @@
+---
+layout: default
+title : ""
+---
+
+<link rel="stylesheet" href="/assets/theme.css">
+<script src="/assets/theme-toggle.js" defer></script>
+
 # 👋 Welcome to My Blog
 Explore key concepts in reinforcement learning, machine learning, and more.  
 Click below to dive into specific topics:
