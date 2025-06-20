@@ -3,7 +3,7 @@ description: A blog for dumping my notes and random thoughts
 # baseurl: "" # No subdirectory since this is youruser.github.io
 # logo:
 markdown: kramdown
-theme: jekyll-theme-minima  # or whatever your theme is
+theme: minima  # or whatever your theme is
 plugins:
   - jekyll-seo-tag
 
