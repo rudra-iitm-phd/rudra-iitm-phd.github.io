@@ -1,5 +1,3 @@
-# 👋 Welcome to My Blog
-
 Explore key concepts in reinforcement learning, machine learning, and more.  
 Click below to dive into specific topics:
 
