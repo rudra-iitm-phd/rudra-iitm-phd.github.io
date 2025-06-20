@@ -7,7 +7,7 @@
     }
     
     .dark-theme {
-      --bg-color: #291717;
+      --bg-color: #282727;
       --text-color: #f7f1f1;
       --link-color: #83b1f9;
       --code-bg: #392b2b;
@@ -31,4 +31,11 @@
       padding: 0.2em 0.4em;
       border-radius: 4px;
     }
-    
+
+    .site-title {
+      color: var(--text-color) !important;
+    }
+
+    .site-description {
+      color: var(--text-color);
+    }
