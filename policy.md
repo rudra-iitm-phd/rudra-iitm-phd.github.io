@@ -1,3 +1,10 @@
+---
+layout: default
+---
+
+<link rel="stylesheet" href="/assets/theme.css">
+<script src="/assets/theme-toggle.js" defer></script>
+
 <script type="text/javascript">
   window.MathJax = {
     tex: {
@@ -212,7 +219,7 @@ Before we proceed further, let's take a detour. Let's formalize the probability 
   - $\phi_\pi (s\rightarrow x, 1) = \sum_{a}\pi(a\mid s)P(x\mid s, a)$
   - $\phi_\pi (s\rightarrow x, 2) = \sum_{a}\pi(a\mid s)\sum_{s'}P(s'\mid s, a)\sum_{a'}\pi(a'\mid s')P(x\mid s', a')$
   - $\phi_\pi (s\rightarrow x, 2) = \sum_{s'}\phi_\pi (s\rightarrow s', 1)\phi_\pi (s'\rightarrow x, 1)$
-  -  $\phi_\pi (s\rightarrow x, 3) = \sum_{a}\pi(a\mid s)\sum_{s'}P(s'\mid s, a)\sum_{a'}\pi(a'\mid s')\sum_{s''}P(s''\mid s', a')\sum_{a''}\pi(a''\mid s'')P(x\mid s'', a'')$ 
+  -  $\phi_\pi (s\rightarrow x, 3) = \sum_{a}\pi(a\mid s)\sum_{s'}P(s'\mid s, a)\sum_{a'}\pi(a'\mid s')\sum_{s''}P(s'' \mid s', a')\sum_{a''}\pi(a'' \mid s'')P(x \mid s'', a'')$ 
   - $\phi_\pi (s\rightarrow x, 3) = \sum_{s''}\phi_\pi (s\rightarrow s'', 2)\phi_\pi (s''\rightarrow x, 1)$
   -  $\phi_\pi (s\rightarrow x, k+1) = \sum_{s'}\phi_\pi (s\rightarrow s', k)\phi_\pi (s'\rightarrow x, 1)$ 
 

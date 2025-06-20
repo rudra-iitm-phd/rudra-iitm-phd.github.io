@@ -1,0 +1,30 @@
+:root {
+      --bg-color: #ffffff;
+      --text-color: #000000;
+      --link-color: #1a0dab;
+      --code-bg: #f4f4f4;
+    }
+    
+    .dark-theme {
+      --bg-color: #121212;
+      --text-color: #e0e0e0;
+      --link-color: #8ab4f8;
+      --code-bg: #1e1e1e;
+    }
+    
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      transition: background 0.3s, color 0.3s;
+    }
+    
+    a {
+      color: var(--link-color);
+    }
+    
+    pre, code {
+      background-color: var(--code-bg);
+      padding: 0.2em 0.4em;
+      border-radius: 4px;
+    }
+    
