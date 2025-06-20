@@ -4,7 +4,7 @@ baseurl: "" # No subdirectory since this is youruser.github.io
 url: "https://rudra-iitm-phd.github.io"
 
 # Theme - pick any from https://github.com/topics/jekyll-theme
-remote_theme: jekyll/minimal
+remote_theme: jekyll/minima
 
 # # Author info (optional)
 # author:
