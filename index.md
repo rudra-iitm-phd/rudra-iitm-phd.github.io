@@ -5,12 +5,13 @@ title : ""
 
 <link rel="stylesheet" href="/assets/theme.css">
 <script src="/assets/theme-toggle.js" defer></script>
+<link rel="icon" href="/assets/favicon.png" type="image/png">
 
 # 👋 Welcome to My Blog
 Explore key concepts in reinforcement learning, machine learning, and more.  
 Click below to dive into specific topics:
 
-- 📌 [Policy Gradients](policy.md)
+- 📌 [Policy Gradients](policy-gradient.md)
 
 ---
 
