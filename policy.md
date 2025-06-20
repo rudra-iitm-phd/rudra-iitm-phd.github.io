@@ -27,7 +27,7 @@ In this blog, I aim to explore the elegant derivation of the policy gradient. Wh
 
 So, the goal here is to explain the derivation in a way that’s digestible for a novice reader. That said, there might be parts where I don’t explain things well enough — and that could interrupt the flow a bit. For that, I ask a little patience (and effort) from you, the reader. Honestly, this is also my way of pushing myself to understand things better to the point where I can explain them without using fancy terminology at all. But hey, this is just *iteration one*, and I’ll keep improving it as I go. So, pardon me — and thanks in advance for bearing with me. 
 
->These notes are based from the lectures of Sergey Levine [^1], Lilian Wang blog and the Reinforcement Learning book by Sutton and Barto
+>These notes are based from the lectures of Sergey Levine [^1], Lilian Wang blog on Policy Gradient algorithms[^3] and the Reinforcement Learning : An Introduction book by Sutton and Barto[^4]
 
 ---
 
@@ -68,7 +68,19 @@ $$
 
 >Note : $\rho_\theta(\tau) = P(s_1)\prod_{t=1}^{T} \pi_\theta(a_t \mid  s_t) \cdot P(s_{t+1} \mid  s_t, a_t)$
 
+$$
+\begin{align*}
+\max_\theta \int \rho_\theta(\tau)r(\tau) d\tau &\equiv \max_\theta \int \sum_{t=1}^{T} \log \pi_\theta(a_t \mid  s_t) \left(\sum_{t'=1}^T r(s_{t'}, a_{t'})\right)  d\tau\\
+&\equiv \max_\theta \int \sum_{t=1}^{T} \log \pi_\theta(a_t \mid  s_t) \left(\sum_{t'=t}^T r(s_{t'}, a_{t'})\right)  d\tau\\
+\end{align*}
+$$
+
+>Note : Taking log doesn't make the objective inconsistent. Also we have used the causality trick which has been explained towards the end
+
+Another way of interpreting the objective would be to maximize the log likelihood of trajectories for which the associated return is high. 
+
 Now that we have some notion about the optimality of a policy we need to figure out how to update $\theta$ so that we reach $\theta^\ast$. As we have mentioned before that we'll use Gradient Ascent for making the updates but have not quite justified it. The reason for making the updates in the direction of the ascent (and not descent) is simply due to our maximization objective i.e *We need to follow the slope to find the peak*. And secondly, we need to figure out the most important part, the Gradient !
+
 
 
 
@@ -118,7 +130,7 @@ Well, we've got it the gradient of the policy, but let's now look at another way
 
 ## Policy gradient from the lens of Bellman
 
-I am assuming that you all have checked out [^2], so with this assumption let's proceed. Now let's imagine we have a policy $\pi_\theta$ and let's say at state $s_t$, most of the time action $a_i$ is executed by $\pi_\theta$. But if we want to find out what if we execute $a_j : a_j\neq a_i$ this one time when we come to $s_t$ and for the rest of the time we behave according to $\pi_\theta$ We take the help of $Q$ values.
+I am assuming that you all have checked out Lilian's blog [^2], so with this assumption let's proceed. Now let's imagine we have a policy $\pi_\theta$ and let's say at state $s_t$, most of the time action $a_i$ is executed by $\pi_\theta$. What if we execute $a_j : a_j\neq a_i$ this one time when we come to $s_t$ and for the rest of the time we behave according to $\pi_\theta$ ? We can find out the goodness of taking action $a_j$ in $s_t$ with the help of $Q$ values.
 
 $$
 Q_{\pi_\theta}(s_t, a_j) = \mathbb{E}_{(s_{t+1}, a_{t+1}, \cdots, s_T, a_T) \sim \rho_\theta(\tau\mid s_t, a_j)}\left[\sum_{k=1}^Tr_{t+k}\right]
@@ -126,7 +138,7 @@ $$
 
 >We're getting rid of $r(s_t, a_t)$ and instead we'll now use $r_{t+1}$ to denote the reward for transitioning from $s_t$ to $s_{t+1}$ by executing $a_t$. And same as before, we assume $\gamma = 1$
 
-In other words, $Q_{\pi_\theta}(s_t, a_j)$ denotes the expected return obtained for executing $a_j$ in $s_j$ and then behaving according to $\pi_\theta$ for the rest of the time. In a sense it evaluates a state-action pair under a given policy. Now what if we want to find out how good a state (not the state-action pair) is ? I mean it only seems logical to execute an action in a state if it's good enough. For this we require the value functions. 
+In other words, $Q_{\pi_\theta}(s_t, a_j)$ denotes the expected return obtained for executing $a_j$ in $s_j$ and then behaving according to $\pi_\theta$ for the rest of the time. It evaluates a state-action pair under a given policy. Now what if we want to find out how good a state (not the state-action pair) is ? I mean it only seems logical to execute an action in a state if it's good enough. For this we require the value functions. 
 
 $$
 \begin{align*}
@@ -155,7 +167,7 @@ $$
 \eta(\pi_\theta)=\eta(\theta) = \mathbb{E}_{s\in S}\left[V_{\pi_\theta}(s)\right] 
 $$
 
-Just to simplify our objective a bit, we assume that there the starting state $s_0$ is  non-random (fixed) and this is okay. If this state is a probable start state or in most games where the starting state is pretty much fixed, this assumption perefectly preserves consistency in our optimization objective.
+Just to simplify our objective a bit, we assume that the starting state $s_0$ is  non-random (fixed) and this is okay. If this state is a probable start state or in most games where the starting state is pretty much fixed, this assumption perefectly preserves consistency in our optimization objective.
 
 Therefore with the new assumption, the objective now becomes :
 
@@ -237,7 +249,7 @@ $$
     \end{align*}    
 $$
 
-Since we assumed that the episodes start from a particular non random state $s$, we have therefore :
+Since we assumed that the episodes start from a particular non random state $s$, we therefore have:
 $$
     \begin{align*}
             h(s) = \begin{cases}
@@ -272,9 +284,9 @@ $$
     \end{align*}
 $$
 
->Note: that the reason for the spot division is because of the possibility of the probability values being greater than one (for a fixed start environment $n(x) > 1$), so we had to normalize it. $\mu_{\pi_{\theta}}$ is the on-policy distribution (the fraction of time spent in each state) under policy $\pi_\theta$. 
+>Note: the reason for the spot division is because of the possibility of the probability values being greater than one (for a fixed start environment $n(x) > 1$), so we had to normalize it. $\mu_{\pi_{\theta}}$ is the on-policy distribution (the fraction of time spent in each state) under policy $\pi_\theta$. 
 
-So, the question is are both the derivations same ? the asnwer is Yes ! With a bit of work, we can show that both these equations are infact the same
+So the question is, are both the derivations of policy gradient trying to tell us the same thing ? The asnwer is Yes ! With a bit of work, we can show that both these equations are infact the same
 
 $$
 \begin{align*}
@@ -283,7 +295,7 @@ $$
 &=  \mathbb{E}_{\tau \sim \rho_\theta(\tau)}\left[ \nabla_\theta\left(\sum_{t=1}^T\log\pi_\theta(a_t \mid  s_t) \left(\sum_{t'=1}^Tr(s_{t'}, a_{t'})\right)\right) \right]\\
 &=  \mathbb{E}_{\tau \sim \rho_\theta(\tau)}\left[ \nabla_\theta\left(\sum_{t=1}^T\log\pi_\theta(a_t \mid  s_t) \left(\sum_{t'=1}^{t-1}r(s_{t'}, a_{t'}) 
 + \sum_{t'=t}^{T}r(s_{t'}, a_{t'})\right)\right) \right]\\
-& \text{integrating the causality trick}\\
+& \text{Using the causality trick *}\\
 &\approx  \mathbb{E}_{\tau \sim \rho_\theta(\tau)}\left[ \nabla_\theta\left(\sum_{t=1}^T\log\pi_\theta(a_t \mid  s_t) \left(\sum_{t'=t}^{T}r(s_{t'}, a_{t'})\right)\right) \right] \ \ \ \ \because \pi_\theta(a_t\mid s_t) \perp  \sum_{t'=1}^{t-1}r(s_{t'}, a_{t'}) \\
 &\text{replacing } \sum_{t'=t}^{T}r(s_{t'}, a_{t'}) \text{ by } Q_{\pi_\theta}(s_t, a_t) \because Q_{\pi_\theta}(s_t, a_t) = \mathbb{E}_{s_{t+1}, a_{t+1}, \cdots \sim \rho_\theta(\tau\mid  s_t, a_t)}\left[\sum_{t'=t}^{T}r(s_{t'}, a_{t'})\right]\\
 &= \mathbb{E}_{\tau \sim \rho_\theta(\tau)}\left[ \nabla_\theta\left(\sum_{t=1}^T \log\pi_\theta(a_t \mid  s_t)\right)Q_{\pi_\theta}(s_t, a_t) \right] \\
@@ -291,7 +303,10 @@ $$
 \end{align*}
 $$
 
-$P^t_{\theta}(s, a)$ is the state-action joint distribution at time $t$. We can also write it as $P^t_{\theta}(s, a) = \mu_\theta^t(s)\pi_\theta(a\mid  s)$ where $\mu_\theta^t$ is the on-policy distribution at time $t$. Now integrating all the timesteps we can achieve the steady state state-action marginal $P_\theta(s, a) = \mu_\theta(s)\pi_\theta(a\mid  s)$. Thus, continuing from before 
+>*Causality : current + future actions are independent of past rewards, i.e actions at the current time step can not affect the past rewards
+
+
+$P^t_{\theta}(s, a)$ is the state-action joint distribution at time $t$. We can also write it as $P^t_{\theta}(s, a) = \mu_\theta^t(s)\pi_\theta(a\mid  s)$ where $\mu_\theta^t$ is the on-policy distribution at time $t$. Now cumulating over all the timesteps we can achieve the steady state state-action marginal $P_\theta(s, a) = \mu_\theta(s)\pi_\theta(a\mid  s)$. Thus, continuing from before 
 
 $$
 \begin{align*}
@@ -303,9 +318,26 @@ $$
 \end{align*}
 $$
 
+Thus both the derivations of policy gradient are equivalent
+
+$$
+ \nabla_\theta \eta(\pi_\theta)=\mathbb{E}_{\tau \sim \rho_\theta(\tau)} \left[ \nabla_\theta\left(\sum_{t=1}^T\log\pi_\theta(a_t \mid  s_t) \right)r(\tau) \right] \equiv \sum_{s}\mu_\theta(s) \sum_a \nabla_\theta\pi_\theta(a \mid  s)Q_{\pi_\theta}(s, a)
+$$
+
+So, what exactly makes this equation elegant?
+We started out with the goal of finding the right policy parameters that would maximize the expected return — basically, making the agent behave in a way that gets the most reward. The objective is pretty intuitive: increase the likelihood of actions (in a given state) that lead to higher returns.
+
+Now, if you think about it from a calculus perspective, you'd expect that we’d need to take the gradient of both the log-probability of the actions and the return, since both depend on the policy in some way. But here's the cool part — the policy gradient trick simplifies the whole thing. It turns this messy-looking gradient into something super clean: we only need to take the gradient with respect to the policy!
+
+Even better, this means we don’t need to know the dynamics of the environment to compute the gradient. That’s a huge deal — and honestly, that’s what makes this whole thing so elegant (and pretty damn cool).
+
+
+
 
 ## References
 
 [^1]: [Sergey Levine RAIL lectures from UC Berkeley](https://rail.eecs.berkeley.edu/deeprlcourse/).
 [^2]:[A long peek into Reinforcement Learning](https://lilianweng.github.io/posts/2018-02-19-rl-overview/)
+[^3]:[Policy Gradient Algorithms](https://lilianweng.github.io/posts/2018-04-08-policy-gradient/)
+[^4]:Sutton, R.S. and Barto, A.G., 1998. *Reinforcement learning: An introduction*
 
