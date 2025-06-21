@@ -114,9 +114,9 @@ $$
 
 I jotted down some quick code using Python and here are some interesting results:
 
-<img src="assets/infinite_feedback_heatmap.png" alt="Diagram" width="500"/>
+<img src="assets/new_heatmap.png" alt="Diagram" width="500"/>
 
-So this is actually a contour plot but I used a heatmap for readability. This plot highlights the interaction between $\gamma$ and $\lambda$, which jointly serve as the Cognitive Gain. The color values encode the Cumulative Cognition when interaction tends to infinity. Corresponding to each $\gamma$ and $\lambda$ value, one can see the cognition level at equilibrium.
+So this is actually a contour plot but I used a heatmap for readability. This plot highlights the interaction between $\gamma$ and $\lambda$, which jointly serve as the Cognitive Gain. The color values encode the Cumulative Cognition when interaction tends to infinity. Corresponding to each $\gamma$ and $\lambda$ value, one can see the cumulative cognition level. As derived from our calculations, we can see that beyond the cumulative gain of 0.5 i.e $\gamma\lambda > \frac{1}{2}$, the cumulative gain exceeds the initial cognition level of $1$, thus enhancing our brain activity / intelligence.
 
 It’s perfectly rational to follow up with the question: *Should we then keep on interacting till the end of time?* To explore this, I am sharing a second plot:
 
