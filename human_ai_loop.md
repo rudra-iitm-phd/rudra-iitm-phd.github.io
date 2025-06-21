@@ -30,7 +30,7 @@ layout: default
 
 # Using AI won't make you dumb: less interaction might
 
-Nowadays, Large Language Models like ChatGPT, DeepSeek, Gemini, Perplexity, Claude, etc., are the flagbearers of Artificial Intelligence, and people query these models now and then to get answers. However, there are some studies[^2] [^3] [^4] [^5] that show using AI might be reducing a person’s intelligence. One of my friends even came up to me and said, "Have you checked this paper by MIT[^2] that shows signs of reduced brain functioning among ChatGPT users?" 
+Nowadays, Large Language Models like ChatGPT, DeepSeek, Gemini, Perplexity, Claude, etc., are the flagbearers of Artificial Intelligence, and people query these models now and then to get answers. However, there are some studies[^2] [^3] [^4] [^5] that show using AI might be reducing a person’s intelligence. One of my friend even came up to me and said, "Have you checked this paper by MIT[^2] that shows signs of reduced brain functioning among ChatGPT users?" 
 
 At first, it wasn’t really surprising, but after a moment, I thought—well, I’ve seen people get smarter, and I personally use it to augment my daily tasks. And honestly, even if not a lot, I feel there's at least a $\delta$ addition to my knowledge base from using these tools, and I find it contradicts the study conducted by MIT. 
 
@@ -58,7 +58,7 @@ So, what is this block diagram? There is a person (a human) who is tasked with s
 > - $\lambda$ is the "cognitive absorption rate" — the fraction of the AI output that a human actually internalizes. $\lambda$ controls the amount of information absorbed by the brain from the AI output. If $\lambda$ is low, you're barely comprehending with what the AI produces. If it's high, you're deeply processing it.
 > - $0 < \epsilon, \gamma, \lambda \leq 1$  
 
-It should be clear by now that if one intends to improve their brain activity, they should **Think**, as relying on **AI** is clearly adversarial. For a simple calculation, we can substitute $\epsilon = 0.05$, $\gamma = 0.5$, and $\lambda = 0.5$ and conclude that:
+It should be clear by now that if one intends to improve their brain activity, they should **Think**, as relying on **AI** is clearly adversarial. For a simple calculation, we can substitute $\epsilon = 0.5$, $\gamma = 0.5$, and $\lambda = 0.5$ and conclude that:
 - Opting to think increases brain activity from 1 to 1.05  
 - Opting for an AI tool reduces brain activity from 1 to 0.25  
 
