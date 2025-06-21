@@ -122,7 +122,7 @@ It’s perfectly rational to follow up with the question: *Should we then keep o
 
 <img src="assets/cumulative_vs_T.png" alt="Diagram" width="500"/>
 
-What's really interesting is the fact that repeating the interaction cycle even twice (for a cognitive gain of 0.6) is sufficient to cross the initial cognitive level of 1 — and this exponentially rises with the number of interaction cycles.
+What's really interesting is the fact that repeating the interaction cycle even twice (for a cognitive gain of 0.62) is sufficient to cross the initial cognitive level of 1 — and this exponentially rises with the number of interaction cycles.
 
 ## 🔬 Try it Yourself
 
@@ -134,8 +134,11 @@ Use the mouse to set the slider value corresponding to the number of interaction
 
 ## References  
 [^1]: [A long peek into Reinforcement Learning](https://lilianweng.github.io/posts/2018-02-19-rl-overview/)
+
 [^2]:[Your Brain on ChatGPT: Accumulation of Cognitive Debt when Using an AI Assistant for Essay Writing Task](https://arxiv.org/abs/2506.08872)
+
 [^3]:[AI Tools in Society: Impacts on Cognitive Offloading and the Future of Critical Thinking](https://www.mdpi.com/2075-4698/15/1/6)
-[^4]:[AI as Extraherics: Fostering Higher-order Thinking Skills in
-Human-AI Interaction](https://arxiv.org/abs/2409.09218)
+
+[^4]:[AI as Extraherics: Fostering Higher-order Thinking Skills in Human-AI Interaction](https://arxiv.org/abs/2409.09218)
+
 [^5]:[Impact of artificial intelligence on human loss in decision making, laziness and safety in education](https://www.nature.com/articles/s41599-023-01787-8)
