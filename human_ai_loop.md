@@ -109,76 +109,19 @@ $$
 $$
 
 <h3>🎛️ Interactive: Explore Cumulative Cognition</h3>
-<div>
-  <label for="gamma">γ (Reluctance to use AI): <span id="gammaVal">0.6</span></label><br>
-  <input type="range" id="gamma" min="0.01" max="1" step="0.01" value="0.6">
-</div>
 
-<div>
-  <label for="lambda">λ (Absorption from AI): <span id="lambdaVal">0.6</span></label><br>
-  <input type="range" id="lambda" min="0.01" max="1" step="0.01" value="0.6">
-</div>
+<label for="gammaSlider">γ (Reluctance to use AI): <span id="gammaVal">0.5</span></label><br>
+<input type="range" min="0.01" max="0.99" step="0.01" value="0.5" id="gammaSlider">
 
-<div>
-  <label for="T">T (Interaction Cycles): <span id="TVal">10</span></label><br>
-  <input type="range" id="T" min="1" max="50" step="1" value="10">
-</div>
+<label for="lambdaSlider">λ (Absorption from AI): <span id="lambdaVal">0.5</span></label><br>
+<input type="range" min="0.01" max="0.99" step="0.01" value="0.5" id="lambdaSlider">
 
-<div id="plot"></div>
+<label for="tSlider">T (Interaction Cycles): <span id="tVal">16</span></label><br>
+<input type="range" min="1" max="50" step="1" value="16" id="tSlider">
 
-<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-<script>
-  const gammaSlider = document.getElementById('gamma');
-  const lambdaSlider = document.getElementById('lambda');
-  const TSlider = document.getElementById('T');
+<div id="plot" style="width: 100%; height: 500px;"></div>
 
-  const gammaLabel = document.getElementById('gammaVal');
-  const lambdaLabel = document.getElementById('lambdaVal');
-  const TLabel = document.getElementById('TVal');
 
-  function cumulativeCognition(gamma, lambda, T) {
-    const g = gamma * lambda;
-    if (g === 1) return T; // avoid divide-by-zero
-    return g * (1 - Math.pow(g, T - 1)) / (1 - g);
-  }
-
-  function updatePlot() {
-    const gamma = parseFloat(gammaSlider.value);
-    const lambda = parseFloat(lambdaSlider.value);
-    const T = parseInt(TSlider.value);
-
-    gammaLabel.textContent = gamma.toFixed(2);
-    lambdaLabel.textContent = lambda.toFixed(2);
-    TLabel.textContent = T;
-
-    const steps = Array.from({ length: T }, (_, i) => i + 1);
-    const values = steps.map(t => cumulativeCognition(gamma, lambda, t));
-
-    const data = [{
-      x: steps,
-      y: values,
-      mode: 'lines+markers',
-      line: { color: 'royalblue', width: 3 },
-      marker: { size: 6 },
-      name: 'Cumulative Cognition'
-    }];
-
-    const layout = {
-      title: `Cumulative Cognition over Time (γλ = ${(gamma * lambda).toFixed(2)})`,
-      xaxis: { title: 'Interaction Cycles (T)', dtick: 1 },
-      yaxis: { title: 'Cognitive Level (𝓘)' },
-      margin: { t: 50 }
-    };
-
-    Plotly.newPlot('plot', data, layout);
-  }
-
-  gammaSlider.addEventListener('input', updatePlot);
-  lambdaSlider.addEventListener('input', updatePlot);
-  TSlider.addEventListener('input', updatePlot);
-
-  updatePlot();
-</script>
 
 
 ## Some Analysis
@@ -197,3 +140,68 @@ What's really interesting is the fact that repeating the interaction cycle even 
 
 ## References  
 [^1]: [A long peek into Reinforcement Learning](https://lilianweng.github.io/posts/2018-02-19-rl-overview/)
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script>
+  const gammaSlider = document.getElementById("gammaSlider");
+  const lambdaSlider = document.getElementById("lambdaSlider");
+  const tSlider = document.getElementById("tSlider");
+  const gammaVal = document.getElementById("gammaVal");
+  const lambdaVal = document.getElementById("lambdaVal");
+  const tVal = document.getElementById("tVal");
+
+  function cumulativeCognition(gamma, lambda, T) {
+    let cg = gamma * lambda;
+    let values = [];
+    for (let t = 1; t <= T; t++) {
+      let sum = cg * (1 - Math.pow(cg, t - 1)) / (1 - cg);
+      values.push(sum);
+    }
+    return values;
+  }
+
+  function updatePlot() {
+    let gamma = parseFloat(gammaSlider.value);
+    let lambda = parseFloat(lambdaSlider.value);
+    let T = parseInt(tSlider.value);
+
+    gammaVal.textContent = gamma.toFixed(2);
+    lambdaVal.textContent = lambda.toFixed(2);
+    tVal.textContent = T;
+
+    let steps = Array.from({length: T}, (_, i) => i + 1);
+    let y = cumulativeCognition(gamma, lambda, T);
+
+    let trace = {
+      x: steps,
+      y: y,
+      mode: 'lines+markers',
+      name: 'Cumulative Cognition',
+      line: { color: 'blue' }
+    };
+
+    let baseline = {
+      x: [1, T],
+      y: [1, 1],
+      mode: 'lines',
+      name: 'Initial level = 1',
+      line: { dash: 'dash', color: 'gray' }
+    };
+
+    Plotly.newPlot('plot', [trace, baseline], {
+      title: `Cumulative Cognition vs Interaction Steps`,
+      xaxis: { title: "Interaction step (t)" },
+      yaxis: { title: "Cognitive Level (𝓘ₜ)" },
+      showlegend: true
+    });
+  }
+
+  // Initial plot
+  updatePlot();
+
+  // Update on slider changes
+  gammaSlider.oninput = updatePlot;
+  lambdaSlider.oninput = updatePlot;
+  tSlider.oninput = updatePlot;
+</script>
+
