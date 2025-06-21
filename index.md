@@ -12,6 +12,7 @@ Explore key concepts in reinforcement learning, machine learning, and more.
 Click below to dive into specific topics:
 
 - 📌 [Policy Gradients](policy-gradient.md)
+- 📌 [Using AI doesn't make you dumb](human_ai_loop.md)
 
 ---
 
