@@ -9,7 +9,7 @@
   </style>
 </head>
 <body>
-  <h2>📈 Cumulative Cognition vs Cognitive Gain</h2>
+  <!-- <h3> Cumulative Cognition vs Cognitive Gain</h3> -->
 
   <label for="tSlider">T (Interaction Cycles): <span id="tVal">16</span></label>
   <input type="range" min="1" max="50" step="1" value="16" id="tSlider" />
@@ -22,7 +22,7 @@
 
     function cumulativeCognition(cg, T) {
       if (cg === 1.0) return T; // avoid divide-by-zero when denominator is 0
-      return cg * (1 - Math.pow(cg, T - 1)) / (1 - cg);
+      return cg * (1 - Math.pow(cg, T)) / (1 - cg);
     }
 
     function updatePlot() {
@@ -37,7 +37,7 @@
         y: cumulative_values,
         mode: 'lines+markers',
         name: 'Cumulative Cognition',
-        line: { color: 'blue' }
+        line: { color: 'green' }
       };
 
       const baseline = {

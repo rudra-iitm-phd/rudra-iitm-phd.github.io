@@ -30,7 +30,7 @@ layout: default
 
 # Using AI won't make you dumb: less interaction might
 
-Nowadays, Large Language Models like ChatGPT, DeepSeek, Gemini, Perplexity, Claude, etc., are the flagbearers of Artificial Intelligence, and people query these models now and then to get answers. However, there are some studies that show using AI might be reducing a person’s intelligence. One of my friends even came up to me and said, "Have you checked this paper by MIT that shows signs of reduced brain functioning among ChatGPT users?" 
+Nowadays, Large Language Models like ChatGPT, DeepSeek, Gemini, Perplexity, Claude, etc., are the flagbearers of Artificial Intelligence, and people query these models now and then to get answers. However, there are some studies[^2] [^3] [^4] [^5] that show using AI might be reducing a person’s intelligence. One of my friends even came up to me and said, "Have you checked this paper by MIT[^2] that shows signs of reduced brain functioning among ChatGPT users?" 
 
 At first, it wasn’t really surprising, but after a moment, I thought—well, I’ve seen people get smarter, and I personally use it to augment my daily tasks. And honestly, even if not a lot, I feel there's at least a $\delta$ addition to my knowledge base from using these tools, and I find it contradicts the study conducted by MIT. 
 
@@ -85,7 +85,7 @@ $$
 \begin{align*}
 \mathcal{I} &= \mathcal{I}_1 + \mathcal{I}_2 + \cdots + \mathcal{I}_T \\
 &= \gamma\lambda + (\gamma\lambda)^2 + \cdots + (\gamma\lambda)^T \\
-&= \gamma\lambda\left(\frac{1 - (\gamma\lambda)^{T-1}}{1 - \gamma\lambda}\right) \\
+&= \gamma\lambda\left(\frac{1 - (\gamma\lambda)^{T}}{1 - \gamma\lambda}\right) \\
 & \text{as } T \to \infty \\
 \mathcal{I} &= \gamma\lambda\left(\frac{1}{1 - \gamma\lambda}\right)
 \end{align*}
@@ -108,26 +108,34 @@ $$
 \boxed{\text{Cognitive Gain from AI} = \gamma \lambda}
 $$
 
-## 🔬 Try it Yourself
 
-<iframe src="/assets/cognition-interactive.html" width="100%" height="900" style="border:none;"></iframe>
 
-## Some Analysis
+## Some Quick Analysis
 
-I jotted down some quick codes using python and here are some interesting results
+I jotted down some quick code using Python and here are some interesting results:
 
 <img src="assets/infinite_feedback_heatmap.png" alt="Diagram" width="500"/>
 
-So this is actually a contour plot but I used a heatmap for readibility. This plot highlights the interaction between $\gamma$ and $\lambda$ which jointly serves the Cognitive gain and the color values encode the Cumulative cognition for infinite interaction. Corresponding to each $\gamma$ and $\lambda$ value, one can see the Cumulative congnition when the interaction tends to infinity. And it's perfectly rational to follow up with the question *Should we then keep on interacting till the end of time ?* And for this, I am going to share a second plot
+So this is actually a contour plot but I used a heatmap for readability. This plot highlights the interaction between $\gamma$ and $\lambda$, which jointly serve as the Cognitive Gain. The color values encode the Cumulative Cognition when interaction tends to infinity. Corresponding to each $\gamma$ and $\lambda$ value, one can see the cognition level at equilibrium.
+
+It’s perfectly rational to follow up with the question: *Should we then keep on interacting till the end of time?* To explore this, I am sharing a second plot:
 
 <img src="assets/cumulative_vs_T.png" alt="Diagram" width="500"/>
 
-What's really interesting is the fact that repeating the interaction cycle even twice (for a cognitive gain of 0.6) is sufficient to cross the initial cognitive level of 1 and this exponentially rises with the increase in the number of Interaction cycles
+What's really interesting is the fact that repeating the interaction cycle even twice (for a cognitive gain of 0.6) is sufficient to cross the initial cognitive level of 1 — and this exponentially rises with the number of interaction cycles.
+
+## 🔬 Try it Yourself
+
+Use the mouse to set the slider value corresponding to the number of interaction cycles $T$. Note the cumulative gain against a particular cognitive gain. 
+
+<iframe src="/assets/cognition-interactive.html" width="100%" height="700" style="border:none;"></iframe>
 
 ---
 
 ## References  
 [^1]: [A long peek into Reinforcement Learning](https://lilianweng.github.io/posts/2018-02-19-rl-overview/)
-
-
-
+[^2]:[Your Brain on ChatGPT: Accumulation of Cognitive Debt when Using an AI Assistant for Essay Writing Task](https://arxiv.org/abs/2506.08872)
+[^3]:[AI Tools in Society: Impacts on Cognitive Offloading and the Future of Critical Thinking](https://www.mdpi.com/2075-4698/15/1/6)
+[^4]:[AI as Extraherics: Fostering Higher-order Thinking Skills in
+Human-AI Interaction](https://arxiv.org/abs/2409.09218)
+[^5]:[Impact of artificial intelligence on human loss in decision making, laziness and safety in education](https://www.nature.com/articles/s41599-023-01787-8)
