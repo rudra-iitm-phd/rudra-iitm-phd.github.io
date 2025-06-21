@@ -110,7 +110,7 @@ $$
 
 ## 🔬 Try it Yourself
 
-<iframe src="/assets/cognition-interactive.html" width="100%" height="600" style="border:none;"></iframe>
+<iframe src="/assets/cognition-interactive.html" width="100%" height="900" style="border:none;"></iframe>
 
 ## Some Analysis
 
