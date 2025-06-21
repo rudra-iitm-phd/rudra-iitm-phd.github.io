@@ -108,7 +108,90 @@ $$
 \boxed{\text{Cognitive Gain from AI} = \gamma \lambda}
 $$
 
+<h3>🎛️ Interactive: Explore Cumulative Cognition</h3>
+<div>
+  <label for="gamma">γ (Reluctance to use AI): <span id="gammaVal">0.6</span></label><br>
+  <input type="range" id="gamma" min="0.01" max="1" step="0.01" value="0.6">
+</div>
 
+<div>
+  <label for="lambda">λ (Absorption from AI): <span id="lambdaVal">0.6</span></label><br>
+  <input type="range" id="lambda" min="0.01" max="1" step="0.01" value="0.6">
+</div>
+
+<div>
+  <label for="T">T (Interaction Cycles): <span id="TVal">10</span></label><br>
+  <input type="range" id="T" min="1" max="50" step="1" value="10">
+</div>
+
+<div id="plot"></div>
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script>
+  const gammaSlider = document.getElementById('gamma');
+  const lambdaSlider = document.getElementById('lambda');
+  const TSlider = document.getElementById('T');
+
+  const gammaLabel = document.getElementById('gammaVal');
+  const lambdaLabel = document.getElementById('lambdaVal');
+  const TLabel = document.getElementById('TVal');
+
+  function cumulativeCognition(gamma, lambda, T) {
+    const g = gamma * lambda;
+    if (g === 1) return T; // avoid divide-by-zero
+    return g * (1 - Math.pow(g, T - 1)) / (1 - g);
+  }
+
+  function updatePlot() {
+    const gamma = parseFloat(gammaSlider.value);
+    const lambda = parseFloat(lambdaSlider.value);
+    const T = parseInt(TSlider.value);
+
+    gammaLabel.textContent = gamma.toFixed(2);
+    lambdaLabel.textContent = lambda.toFixed(2);
+    TLabel.textContent = T;
+
+    const steps = Array.from({ length: T }, (_, i) => i + 1);
+    const values = steps.map(t => cumulativeCognition(gamma, lambda, t));
+
+    const data = [{
+      x: steps,
+      y: values,
+      mode: 'lines+markers',
+      line: { color: 'royalblue', width: 3 },
+      marker: { size: 6 },
+      name: 'Cumulative Cognition'
+    }];
+
+    const layout = {
+      title: `Cumulative Cognition over Time (γλ = ${(gamma * lambda).toFixed(2)})`,
+      xaxis: { title: 'Interaction Cycles (T)', dtick: 1 },
+      yaxis: { title: 'Cognitive Level (𝓘)' },
+      margin: { t: 50 }
+    };
+
+    Plotly.newPlot('plot', data, layout);
+  }
+
+  gammaSlider.addEventListener('input', updatePlot);
+  lambdaSlider.addEventListener('input', updatePlot);
+  TSlider.addEventListener('input', updatePlot);
+
+  updatePlot();
+</script>
+
+
+## Some Analysis
+
+I jotted down some quick codes using python and here are some interesting results
+
+<img src="assets/infinite_feedback_heatmap.png" alt="Diagram" width="500"/>
+
+So this is actually a contour plot but I used a heatmap for readibility. This plot highlights the interaction between $\gamma$ and $\lambda$ which jointly serves the Cognitive gain and the color values encode the Cumulative cognition for infinite interaction. Corresponding to each $\gamma$ and $\lambda$ value, one can see the Cumulative congnition when the interaction tends to infinity. And it's perfectly rational to follow up with the question *Should we then keep on interacting till the end of time ?* And for this, I am going to share a second plot
+
+<img src="assets/cumulative_vs_T.png" alt="Diagram" width="500"/>
+
+What's really interesting is the fact that repeating the interaction cycle even twice (for a cognitive gain of 0.6) is sufficient to cross the initial cognitive level of 1 and this exponentially rises with the increase in the number of Interaction cycles
 
 ---
 
