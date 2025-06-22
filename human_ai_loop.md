@@ -109,16 +109,134 @@ $$
 $$
 
 
-
 ## Some Quick Analysis
 
 I jotted down some quick code using Python and here are some interesting results:
 
 <img src="assets/new_heatmap.png" alt="Diagram" width="500"/>
 
-So this is actually a contour plot but I used a heatmap for readability. This plot highlights the interaction between $\gamma$ and $\lambda$, which jointly serve as the Cognitive Gain. The color values encode the Cumulative Cognition when interaction tends to infinity. Corresponding to each $\gamma$ and $\lambda$ value, one can see the cumulative cognition level. As derived from our calculations, we can see that beyond the cumulative gain of 0.5 i.e $\gamma\lambda > \frac{1}{2}$, the cumulative gain exceeds the initial cognition level of $1$, thus enhancing our brain activity / intelligence.
+So this is actually a contour plot but I used a heatmap for readability. This plot highlights the interaction between $\gamma$ and $\lambda$, which jointly serve as the Cognitive Gain from using the AI tools. The color values encode the Cumulative Cognition when interaction tends to infinity. Corresponding to each $\gamma$ and $\lambda$ value, one can see the cumulative cognition level. As derived from our calculations, we can see that beyond the cumulative gain of 0.5 i.e $\gamma\lambda > \frac{1}{2}$, the cumulative gain exceeds the initial cognition level of $1$, thus enhancing our brain activity / intelligence.
 
-It’s perfectly rational to follow up with the question: *Should we then keep on interacting till the end of time?* To explore this, I am sharing a second plot:
+<!-- It’s perfectly rational to follow up with the question: *Should we then keep on interacting infinitely till the end of time?* What's the minimum number of times $T$, one should interact with the bot to cross the initial cognitive level ? To explore this, let's do the formulation :
+
+$$
+\begin{align*}
+\mathcal{I}&> 1\\
+\gamma\lambda\left(\frac{1 - (\gamma\lambda)^{T}}{1 - \gamma\lambda}\right)&>1\\
+\text{Let }\gamma\lambda = \rho\\
+\rho\left(\frac{1 - \rho^{T}}{1 - \rho}\right)&>1\\
+\rho - \rho^{T+1} &> 1- \rho\\
+2\rho -\rho^{T+1} &> 1\\
+\log(2\rho -1) &> (T+1)\log\rho\\
+\end{align*}
+$$
+
+We can now analyze this equation properly, 
+
+$$
+\begin{align*}
+\log(2\rho -1) &> (T+1)\log\rho\\
+\log_\rho(2\rho -1) &> T+1\\
+T &< \log_\rho(\frac{2\rho -1}{\rho})
+\end{align*}
+$$
+
+The minimum value which $T$ can take is $1$, also we want $T << \infty$, Thus, 
+
+$$
+\begin{align*}
+\log_\rho(\frac{2\rho -1}{\rho}) &< \infty\\
+-\log_\rho(\frac{2\rho -1}{\rho}) &> -\infty\\
+\frac{\rho}{2\rho -1}&> 0\\
+\therefore 2\rho -1 &> 0\\
+\therefore \rho &> \frac{1}{2}
+\end{align*}
+$$
+
+as 
+$$
+\begin{align*}
+\rho &< 1\\
+\log\rho &< 0
+\end{align*}
+$$
+
+and similarly, 
+
+$$
+\begin{align*}
+\rho &> \frac{1}{2}\\
+\log(2\rho -1) &> \log 0\\
+\log(2\rho -1) &> -\infty\\
+\end{align*}
+$$
+
+With some further work, we can show that 
+$$
+T = \bigg\lfloor \bigg|\frac{\log{(2\rho -1)}}{\log \rho} \bigg| - 1\bigg\rfloor
+$$ -->
+
+It’s perfectly rational to follow up with the question: *Should we then keep on interacting infinitely till the end of time?* What's the minimum number of times $T$, one should interact with the bot to cross the initial cognitive level? To explore this, let's do the formulation:
+
+$$
+\begin{align*}
+\mathcal{I} &> 1 \\
+\gamma\lambda\left(\frac{1 - (\gamma\lambda)^{T}}{1 - \gamma\lambda}\right) &> 1 \\
+\text{Let } \gamma\lambda = \rho \\
+\rho\left(\frac{1 - \rho^{T}}{1 - \rho}\right) &> 1 \\
+\rho - \rho^{T+1} &> 1 - \rho \\
+2\rho - \rho^{T+1} &> 1 \\
+\log(2\rho - 1) &> (T+1)\log\rho \\
+\end{align*}
+$$
+
+We can now analyze this equation properly:
+
+$$
+\begin{align*}
+\log(2\rho - 1) &> (T+1)\log\rho \\
+\log_\rho(2\rho - 1) &> T+1 \\
+T &< \log_\rho\left(\frac{2\rho - 1}{\rho}\right)
+\end{align*}
+$$
+
+The minimum value which $T$ can take is $1$. Also, we want $T \ll \infty$. Thus,
+
+$$
+\begin{align*}
+\log_\rho\left(\frac{2\rho - 1}{\rho}\right) &< \infty \\
+\frac{\rho}{2\rho - 1} &> 0 \\
+\therefore 2\rho - 1 &> 0 \\
+\therefore \rho &> \frac{1}{2}
+\end{align*}
+$$
+
+as
+
+$$
+\begin{align*}
+\rho &< 1 \\
+\log\rho &< 0
+\end{align*}
+$$
+
+and similarly,
+
+$$
+\begin{align*}
+\rho &> \frac{1}{2} \\
+\log(2\rho - 1) &> \log 0 \\
+\log(2\rho - 1) &> -\infty
+\end{align*}
+$$
+
+With some further work, we can show that:
+
+$$
+T = \left\lceil \frac{\log(2\rho - 1)}{\log\rho} - 1 \right\rceil
+$$
+
+Following is a plot which depicts the effect of $T$ values on cumulative cognition level for the corresponding value of cognitive gain
 
 <img src="assets/cumulative_vs_T.png" alt="Diagram" width="500"/>
 
@@ -131,6 +249,11 @@ Use the mouse to set the slider value corresponding to the number of interaction
 <iframe src="/assets/cognition-interactive.html" width="100%" height="700" style="border:none;"></iframe>
 
 ---
+
+## Takeway
+
+A cognitive gain of $\gamma\lambda > \frac{1}{2}$
+
 
 ## References  
 [^1]: [A long peek into Reinforcement Learning](https://lilianweng.github.io/posts/2018-02-19-rl-overview/)
