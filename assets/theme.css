@@ -39,3 +39,22 @@
     .site-description {
       color: var(--text-color);
     }
+
+    #searchInput {
+      width: 100%;
+      padding: 0.6em;
+      font-size: 1em;
+      margin-top: 1em;
+      margin-bottom: 1em;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    
+    #searchList li {
+      margin: 0.8em 0;
+      padding: 0.7em;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      background-color: var(--card-bg, #f9f9f9);
+    }
+    
