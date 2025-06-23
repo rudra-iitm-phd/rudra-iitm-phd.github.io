@@ -9,22 +9,36 @@ title : ""
 
 
 <input type="text" id="searchInput" placeholder="🔍 Search topics..." />
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  const input = document.getElementById("searchInput");
-  const listItems = document.getElementById("searchList").getElementsByTagName("li");
 
-  input.addEventListener("keyup", function() {
-    const filter = input.value.toLowerCase();
-    Array.from(listItems).forEach((item) => {
-      const text = item.textContent.toLowerCase();
-      item.style.display = text.includes(filter) ? "" : "none";
+<ul id="searchList">
+  <!-- JS will populate this -->
+</ul>
+
+<script defer>
+  document.addEventListener("DOMContentLoaded", async () => {
+    const input = document.getElementById("searchInput");
+    const list = document.getElementById("searchList");
+
+    const res = await fetch('/data/posts.json');
+    const posts = await res.json();
+
+    function render(filtered) {
+      list.innerHTML = filtered.map(p =>
+        `<li>
+           <a href="${p.url}">📌 ${p.title}</a><br>
+           <small>${p.desc}</small>
+         </li>`).join('');
+    }
+
+    render(posts);
+
+    input.addEventListener("input", () => {
+      const q = input.value.toLowerCase();
+      render(posts.filter(p => p.title.toLowerCase().includes(q) ||
+                                p.desc.toLowerCase().includes(q)));
     });
   });
-});
 </script>
-
----
 
 
 
