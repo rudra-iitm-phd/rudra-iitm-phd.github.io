@@ -28,17 +28,28 @@ title : ""
            <a href="${p.url}">📌 ${p.title}</a><br>
            <small>${p.desc}</small>
          </li>`).join('');
+      list.style.display = filtered.length ? 'block' : 'none';
     }
 
-    render(posts);
+    // Start with empty display
+    list.style.display = 'none';
 
     input.addEventListener("input", () => {
-      const q = input.value.toLowerCase();
-      render(posts.filter(p => p.title.toLowerCase().includes(q) ||
-                                p.desc.toLowerCase().includes(q)));
+      const q = input.value.trim().toLowerCase();
+      if (q.length === 0) {
+        list.style.display = 'none';
+        list.innerHTML = '';
+      } else {
+        const filtered = posts.filter(p =>
+          p.title.toLowerCase().includes(q) ||
+          p.desc.toLowerCase().includes(q)
+        );
+        render(filtered);
+      }
     });
   });
 </script>
+
 
 
 
