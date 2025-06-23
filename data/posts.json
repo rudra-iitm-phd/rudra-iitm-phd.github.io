@@ -1,11 +1,11 @@
 [
       {
-        "url": "/policy_gradient/",
+        "url": "policy-gradient.md",
         "title": "Policy Gradients",
         "desc": "Elegant derivation of the policy gradient theorem."
       },
       {
-        "url": "/human_ai_loop/",
+        "url": "human_ai_loop.md",
         "title": "Using AI doesn't make you dumb",
         "desc": "Exploring how human‑AI collaboration enhances cognition."
       }
