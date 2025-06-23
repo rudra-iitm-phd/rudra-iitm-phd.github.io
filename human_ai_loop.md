@@ -54,7 +54,7 @@ So, what is this block diagram? There is a person (a human) who is tasked with s
 > **Note**:  
 > - Initially, the cognition level is set to 1  
 > - $\epsilon$ represents the reward for engaging one's cognition. It reflects the intrinsic benefit of thinking—even if the outcome isn't correct, the process itself contributes to growth.  
-> - $\gamma$ is the user's reluctance to use AI. A high $\gamma$ means low reluctance, i.e., you're freely delegating to AI whereas a low $\gamma$ means you're hesitant, using AI sparingly.
+> - $\gamma$ is the user's tendency to use AI. A high $\gamma$ means low reluctance or high tendency, i.e., you're freely delegating to AI whereas a low $\gamma$ means you're hesitant, using AI sparingly.
 > - $\lambda$ is the "cognitive absorption rate" — the fraction of the AI output that a human actually internalizes. $\lambda$ controls the amount of information absorbed by the brain from the AI output. If $\lambda$ is low, you're barely comprehending with what the AI produces. If it's high, you're deeply processing it.
 > - $0 < \epsilon, \gamma, \lambda \leq 1$  
 
@@ -85,7 +85,8 @@ $$
 \begin{align*}
 \mathcal{I} &= \mathcal{I}_1 + \mathcal{I}_2 + \cdots + \mathcal{I}_T \\
 &= \gamma\lambda + (\gamma\lambda)^2 + \cdots + (\gamma\lambda)^T \\
-&= \gamma\lambda\left(\frac{1 - (\gamma\lambda)^{T}}{1 - \gamma\lambda}\right) \\
+\text{Sum of the first } &n \text{ terms of a GP : } x + x^2 +\cdots x^n= x\left(\frac{1-x^n}{1-x}\right) ; x \in (0,1) \\
+&= \gamma\lambda\left(\frac{1 - (\gamma\lambda)^{T}}{1 - \gamma\lambda}\right)  \\
 & \text{as } T \to \infty \\
 \mathcal{I} &= \gamma\lambda\left(\frac{1}{1 - \gamma\lambda}\right)
 \end{align*}
@@ -208,7 +209,7 @@ I’ve taken a simplistic approach to model the human-AI interaction as a basic 
 
 This supports using AI tools for **evaluating**, **refining**, and **augmenting** one's problem-solving ability. Conversely, it discourages *pure delegation*—using AI with little to no proofreading, internal engagement, or cognitive feedback.
 
-A key result here is that for interaction to be beneficial, the cognitive gain $\gamma \lambda$ must exceed $\frac{1}{2}$. That is, there needs to be a **balance between low reluctance to use AI** and **high internalization of its output**. The best cognitive uplift happens when both of these are maximized.
+A key result here is that for interaction to be beneficial, the cognitive gain $\gamma \lambda$ must exceed $\frac{1}{2}$. That is, there needs to be a **balance between the tendency to use AI** and **the internalization of its output**. The best cognitive uplift happens when both of these are maximized.
 
 
 
