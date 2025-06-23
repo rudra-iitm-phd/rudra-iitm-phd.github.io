@@ -25,7 +25,7 @@ title : ""
     function render(filtered) {
       list.innerHTML = filtered.map(p =>
         `<li>
-           <a href="${p.url}">📌 ${p.title}</a><br>
+           <a href="${p.url}">${p.title}</a><br>
            <small>${p.desc}</small>
          </li>`).join('');
       list.style.display = filtered.length ? 'block' : 'none';
@@ -55,14 +55,14 @@ title : ""
 
 # 👋 Welcome to My Blog
 Explore key concepts in reinforcement learning, machine learning, and more.  
-Click below to dive into specific topics:
 
-> **[Policy Gradients](policy-gradient.md)**  
+## Reinforcement Learning
+> ### [Policy Gradients](policy-gradient.md) 
 > _Appreciating the elegant derivation of the policy gradient theorem with intuitive explanations._
 
 ---
-
-> **[Using AI doesn't make you dumb](human_ai_loop.md)**  
+## Random thoughts
+> ### [Using AI doesn't make you dumb](human_ai_loop.md) 
 _Human-AI collaboration to boost cognition._
 
 ---

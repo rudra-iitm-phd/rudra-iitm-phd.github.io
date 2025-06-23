@@ -115,68 +115,15 @@ I jotted down some quick code using Python and here are some interesting results
 
 <img src="assets/new_heatmap.png" alt="Diagram" width="500"/>
 
-So this is actually a contour plot but I used a heatmap for readability. This plot highlights the interaction between $\gamma$ and $\lambda$, which jointly serve as the Cognitive Gain from using the AI tools. The color values encode the Cumulative Cognition when interaction tends to infinity. Corresponding to each $\gamma$ and $\lambda$ value, one can see the cumulative cognition level. As derived from our calculations, we can see that beyond the cumulative gain of 0.5 i.e $\gamma\lambda > \frac{1}{2}$, the cumulative gain exceeds the initial cognition level of $1$, thus enhancing our brain activity / intelligence.
+So this should technically be represented using a contour plot, but I used a heatmap for readability. The plot captures the interaction between $\gamma$ and $\lambda$, which together represent the *Cognitive Gain* from using AI tools. The color values denote the **Cumulative Cognition** when interaction tends to infinity.
 
-<!-- It’s perfectly rational to follow up with the question: *Should we then keep on interacting infinitely till the end of time?* What's the minimum number of times $T$, one should interact with the bot to cross the initial cognitive level ? To explore this, let's do the formulation :
+As derived earlier, we observe that once the cumulative gain exceeds 0.5—i.e., $\gamma\lambda > \frac{1}{2}$—the total cognitive gain surpasses the baseline level of $1$. This suggests that under sufficient interaction, cognition not only recovers but improves, boosting our intelligence or brain activity over time.
 
-$$
-\begin{align*}
-\mathcal{I}&> 1\\
-\gamma\lambda\left(\frac{1 - (\gamma\lambda)^{T}}{1 - \gamma\lambda}\right)&>1\\
-\text{Let }\gamma\lambda = \rho\\
-\rho\left(\frac{1 - \rho^{T}}{1 - \rho}\right)&>1\\
-\rho - \rho^{T+1} &> 1- \rho\\
-2\rho -\rho^{T+1} &> 1\\
-\log(2\rho -1) &> (T+1)\log\rho\\
-\end{align*}
-$$
+---
 
-We can now analyze this equation properly, 
+It’s perfectly rational to follow up with the question: *Should we then keep on interacting infinitely till the end of time?* Or more practically: *What’s the minimum number of interactions, $T$, required to cross the initial cognitive level of $1$?*
 
-$$
-\begin{align*}
-\log(2\rho -1) &> (T+1)\log\rho\\
-\log_\rho(2\rho -1) &> T+1\\
-T &< \log_\rho(\frac{2\rho -1}{\rho})
-\end{align*}
-$$
-
-The minimum value which $T$ can take is $1$, also we want $T << \infty$, Thus, 
-
-$$
-\begin{align*}
-\log_\rho(\frac{2\rho -1}{\rho}) &< \infty\\
--\log_\rho(\frac{2\rho -1}{\rho}) &> -\infty\\
-\frac{\rho}{2\rho -1}&> 0\\
-\therefore 2\rho -1 &> 0\\
-\therefore \rho &> \frac{1}{2}
-\end{align*}
-$$
-
-as 
-$$
-\begin{align*}
-\rho &< 1\\
-\log\rho &< 0
-\end{align*}
-$$
-
-and similarly, 
-
-$$
-\begin{align*}
-\rho &> \frac{1}{2}\\
-\log(2\rho -1) &> \log 0\\
-\log(2\rho -1) &> -\infty\\
-\end{align*}
-$$
-
-With some further work, we can show that 
-$$
-T = \bigg\lfloor \bigg|\frac{\log{(2\rho -1)}}{\log \rho} \bigg| - 1\bigg\rfloor
-$$ -->
-
-It’s perfectly rational to follow up with the question: *Should we then keep on interacting infinitely till the end of time?* What's the minimum number of times $T$, one should interact with the bot to cross the initial cognitive level? To explore this, let's do the formulation:
+To explore this, let’s work it out:
 
 $$
 \begin{align*}
@@ -190,7 +137,7 @@ $$
 \end{align*}
 $$
 
-We can now analyze this equation properly:
+We can analyze this more cleanly as:
 
 $$
 \begin{align*}
@@ -200,18 +147,13 @@ T &< \log_\rho\left(\frac{2\rho - 1}{\rho}\right)
 \end{align*}
 $$
 
-The minimum value which $T$ can take is $1$. Also, we want $T \ll \infty$. Thus,
+Now, the minimum valid value $T$ can take is $1$. Also, we want $T \ll \infty$. So for this to be well-defined:
 
 $$
-\begin{align*}
-\log_\rho\left(\frac{2\rho - 1}{\rho}\right) &< \infty \\
-\frac{\rho}{2\rho - 1} &> 0 \\
-\therefore 2\rho - 1 &> 0 \\
-\therefore \rho &> \frac{1}{2}
-\end{align*}
+\frac{\rho}{2\rho - 1} > 0 \Rightarrow 2\rho - 1 > 0 \Rightarrow \rho > \frac{1}{2}
 $$
 
-as
+Since both $\gamma, \lambda < 1$, we know:
 
 $$
 \begin{align*}
@@ -225,34 +167,49 @@ and similarly,
 $$
 \begin{align*}
 \rho &> \frac{1}{2} \\
-\log(2\rho - 1) &> \log 0 \\
 \log(2\rho - 1) &> -\infty
 \end{align*}
 $$
 
-With some further work, we can show that:
+So for all $\rho \in \left(\frac{1}{2}, 1\right)$:
 
 $$
-T = \left\lceil \frac{\log(2\rho - 1)}{\log\rho} - 1 \right\rceil
+\begin{align*}
+\log(2\rho - 1) &> (T+1)\log\rho \\
+\because \log \rho < 0, \text{ and }& \log(2\rho -1) < 0, \text{ flipping the inequality:} \\
+T &> \log_\rho \left(\frac{2\rho - 1}{\rho}\right) \\
+\Rightarrow T &> \left\lceil \log_\rho \left(\frac{2\rho - 1}{\rho} \right) \right\rceil
+\end{align*}
 $$
 
-Following is a plot which depicts the effect of $T$ values on cumulative cognition level for the corresponding value of cognitive gain
+The plot below summarizes this and visualizes how many interaction cycles are needed (minimum $T$) to cross the cognitive level of $1$, for different values of the cognitive gain $\rho$ or $\gamma\lambda$. One can observe the increase in Cumulative cognition when $T$ is just 1 more than the necessary minimum value $\left\lceil \log_\rho \left(\frac{2\rho - 1}{\rho} \right) \right\rceil$
 
-<img src="assets/cumulative_vs_T.png" alt="Diagram" width="500"/>
+<img src="assets/min_T.png" alt="Minimum T Heatmap" width="500"/>
 
-What's really interesting is the fact that repeating the interaction cycle even twice (for a cognitive gain of 0.62) is sufficient to cross the initial cognitive level of 1 — and this exponentially rises with the number of interaction cycles.
+And here's another plot that illustrates how cumulative cognition increases as a function of $T$, given a fixed cognitive gain:
+
+<img src="assets/cumulative_vs_T.png" alt="Cumulative Cognition vs T" width="500"/>
+
+What’s really interesting is this: even interacting *twice* is sufficient to cross the baseline cognition level if the cognitive gain is just $0.62$. Beyond that, the cumulative cognition **grows exponentially** with each additional cycle.
+
+---
 
 ## 🔬 Try it Yourself
 
-Use the mouse to set the slider value corresponding to the number of interaction cycles $T$. Note the cumulative gain against a particular cognitive gain. 
+Use the slider below to set the number of interaction cycles ($T$). Observe how cumulative cognition evolves based on different cognitive gain values.
 
 <iframe src="/assets/cognition-interactive.html" width="100%" height="700" style="border:none;"></iframe>
 
 ---
 
-## Takeway
+## Takeaway
 
-A cognitive gain of $\gamma\lambda > \frac{1}{2}$
+I’ve taken a simplistic approach to model the human-AI interaction as a basic MDP. Based on the assumptions and structure of this model, it seems that **AI doesn’t decrease cognition**—rather, **lack of interaction and internalization does**.
+
+This supports using AI tools for **evaluating**, **refining**, and **augmenting** one's problem-solving ability. Conversely, it discourages *pure delegation*—using AI with little to no proofreading, internal engagement, or cognitive feedback.
+
+A key result here is that for interaction to be beneficial, the cognitive gain $\gamma \lambda$ must exceed $\frac{1}{2}$. That is, there needs to be a **balance between low reluctance to use AI** and **high internalization of its output**. The best cognitive uplift happens when both of these are maximized.
+
 
 
 ## References  
