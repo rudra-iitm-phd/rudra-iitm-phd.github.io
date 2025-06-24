@@ -59,6 +59,7 @@ $$
 $$
 
 Is this guaranteed to improve the policy? Let’s analyze:
+
 $$
 \begin{align*}
 \eta(\pi') &= \mathbb{E}_{s \sim h(s)}\left[V_{\pi'}(s)\right] \\
@@ -75,15 +76,19 @@ So policy iteration guarantees improvement over the current policy, as long as t
 To all my dear skeptic readers, here’s a short proof:
 
 Assume a policy $\pi$ is suboptimal but still satisfies:
+
 $$
 \forall s \in S,\quad \pi(s) = \arg\max_a Q_\pi(s, a)
 $$
+
 Then by definition of improvement:
+
 $$
 \pi'(s) = \arg\max_a Q_\pi(s, a) = \pi(s)
 $$
 
 But we also know that the optimal policy $\pi^*$ satisfies:
+
 $$
 \forall s \in S, \quad \pi^*(s) = \arg\max_a Q_{\pi^*}(s, a)
 $$
