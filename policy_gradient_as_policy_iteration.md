@@ -26,6 +26,8 @@ layout: default
   };
 </script>
 
+<script async id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
 # Policy Gradient as Policy Iteration
 
 In this blog, I am going to document another interpretation of Policy Gradient in terms of Policy Iteration. To keep this blog short, I’m skipping a lot of fundamentals and will cite resources for readers to refer to wherever necessary. With that, let's try to look at Policy Gradient from the lens of Policy Iteration.
