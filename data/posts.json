@@ -8,6 +8,12 @@
         "url": "human_ai_loop.html",
         "title": "Using AI doesn't make you dumb",
         "desc": "Exploring how human‑AI collaboration enhances cognition."
+      },
+
+      {
+        "url": "policy_gradient_as_policy_iteration.html",
+        "title": "policy gradient as policy iteration",
+        "desc": ""
       }
     ]
     
