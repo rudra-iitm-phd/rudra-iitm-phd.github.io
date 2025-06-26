@@ -102,11 +102,82 @@ So far, we’ve seen:
 
 ## Policy Gradient
 
-You can check out my blog on [Policy Gradients](policy-gradient.md) to dig into the derivation. One may wonder: *Why do we need another method if we already have a proven one?* That’s actually outside the scope of this blog, since it would require introducing a few more topics first — but here’s a rough idea.
+You can check out my blog on [Policy Gradients](policy-gradient.md) to dig into the derivation. One may wonder: *Why do we need another method if we already have a proven one?* That’s actually outside the scope of this blog, since it would require bootstrapping a few more topics — but here’s a rough idea.
 
 The improvement step in policy iteration demands a `max` over the set of actions. Now imagine the set of actions is infinite — say, continuous. Take it a step further: the improvement needs to be done for *every* state, and imagine the state space is also infinite. Can you really do policy iteration in practice then?
 
 Let’s say, somehow, you’ve managed to carve out a significant chunk of the state-action space and now want to perform policy evaluation. What happens when you encounter a state you’ve never seen before?
 
-To deal with such issues, function approximation was introduced, which later evolved into deep RL. Policy Gradient is one such approach that proposes a different way to handle this — a school of thought in its own right.
- 
+To deal with such issues, function approximation was introduced, which later evolved into deep RL. Policy Gradient aims to find the best policy which yields the maximum return by moving in the direction of the gradient of the policy. Therefore a natual question which might emerge is *Is an improvement guaranteed for moving in the direction of gradient like that of Policy Iteration ?* And the answer is - Yes !
+
+The objective of Policy Gradient is formulated as :
+
+$$
+\max_\theta \eta(\theta) = \max_\theta \mathbb{E}_{\tau \sim \rho_\theta(\tau)}\left[\sum_{t=0}^\infty \gamma^t r(s_t, a_t)\right]
+$$
+
+> $\eta(\theta)$ is the measure of the performance of the policy $\pi_\theta$ which is essentially the expected discounted return for trajectories sampled according to the trajectory distribution $\rho_\theta$
+
+Therefore according to the gradient ascent update rule, the parameter is updated as 
+
+$$
+\theta' \leftarrow \theta + \alpha \nabla_\theta \eta(\theta)
+$$
+
+Policy Gradient claims that maximizing $\eta(\theta')$ is consistent with maximizing $\eta(\theta') - \eta(\theta)$ and therefore is equivalent to the objective of maximizing the expected cumulative discounted **Advantage** under the policy $\pi_{\theta}$ for states and actions sampled according to the trajectory distribution $\rho_{\theta'}$. More formally, 
+
+$$
+\max_{\theta'}\eta(\theta') \equiv \max_{\theta'}\eta(\theta') - \eta(\theta) \equiv \max_{\theta'}\mathbb{E}_{\tau \sim \rho_{\theta'}(\tau)}\left[\sum_{t=0}^\infty \gamma^t A_{\pi_{\theta}}(s_t, a_t)\right]
+$$
+
+Before we jump into the proof, let's convince ourselves first, why doing this is actually justified. Let's imagine 2 policies which is exactly similar to the other except for a state $s$ where policy $\pi_1$ takes $a_1$ whereas $\pi_2$ takes $a_2$. Both these actions take the agent to state $s'$ but they yield different reward. Specifically, $r(s, a_1) = -1, r(s, a_2) = 1$. The figure below is an illustration of the presented scenario. 
+
+<img src="assets/2_trajectpry_w_1_diff_action.png" alt="Cumulative Cognition vs T" width="500"/>
+
+The advantage of taking an action $a$ in state $s$ and then acting according to policy $\pi$ is formulated as :
+
+$$
+\begin{align*}
+A_{\pi}(s, a) &= Q_\pi(s, a) - \mathbb{E}_{a, \sim \pi}\left[Q_\pi(s, a) \right]\\ 
+&= Q_\pi(s, a)  - V_\pi(s) \\
+&= \mathbb{E}_{s'\sim P(s'|s, a)}\left[r(s, a) + \gamma V_{\pi}(s')\right] - V_\pi(s)\\
+&\approx r(s, a) + \gamma V_\pi(s') - V_\pi(s)
+\end{align*}
+$$
+
+Therefore, the advantages of taking actions $a_1, a_2$ under the policies $\pi_1, \pi_2$ are 
+
+$$
+\begin{align*}
+A_{\pi_1}(s, \pi_1(s)) &= -1 + \gamma V_{\pi_1}(s') - V_{\pi_1}(s)\\
+&= -1 + \gamma V_{\pi_1}(s') - Q_{\pi_1}(s, a_1)\\
+& = -1 + \gamma V_{\pi_1}(s') - r(s, a_1) - \gamma V_{\pi_1}(s') = 0
+\end{align*}
+$$
+
+$$
+\begin{align*}
+A_{\pi_1}(s, \pi_2(s)) &= 1 + \gamma V_{\pi_1}(s') - V_{\pi_1}(s)\\
+&= 1 + \gamma V_{\pi_1}(s') - Q_{\pi_1}(s, a_1)\\
+& = 1 + \gamma V_{\pi_1}(s') - r(s, a_1) - \gamma V_{\pi_1}(s') = 2
+\end{align*}
+$$
+
+$$
+\boxed{\therefore \quad A_{\pi_1}(s, \pi_2(s)) > A_{\pi_1}(s, \pi_1(s)) }
+$$
+
+As policy $\pi_1, \pi_2$ are otherwise similar except for the above case, we have 
+
+$$
+\sum_{t=1}^\infty\mathbb{E}_{s_t, a_t \sim \rho_{\pi_1} }\left[A_{\pi_1}(s_t, a_t)\right] = \sum_{t=1}^\infty\mathbb{E}_{s_t, a_t \sim \rho_{\pi_2} }\left[A_{\pi_1}(s_t, a_t)\right] \quad : s_t \neq s
+$$
+
+Therefore following this equality, we have 
+
+$$
+\boxed{
+\sum_{t=1}^\infty\mathbb{E}_{s_t, a_t \sim \rho_{\pi_1} }\left[A_{\pi_1}(s_t, a_t)\right] > \sum_{t=1}^\infty\mathbb{E}_{s_t, a_t \sim \rho_{\pi_2} }\left[A_{\pi_1}(s_t, a_t)\right]}
+$$
+
+Hence, if a policy is better than the old policy even by a smudge, we can gurantee the increase in the expected cumulative advantage. *This can easily be extended to the discounted setting, we'll show this afterwards*
