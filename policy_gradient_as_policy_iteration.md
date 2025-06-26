@@ -192,9 +192,18 @@ Thus we have
 
 $$
 \begin{align*}
-\eta(\theta') - \eta(\theta) &= \eta(\theta) - \textcolor{blue}{\mathbb{E}_{s_0 \sim h(s_0)}\left[V_{\pi_\theta}(s_0)\right]}
+\eta(\theta') - \eta(\theta) &= \eta(\theta') - \textcolor{blue}{\mathbb{E}_{s_0 \sim h(s_0)}\left[V_{\pi_\theta}(s_0)\right]}\\
+&=\eta(\theta') - \textcolor{red}{\mathbb{E}_{s_0, a_0, \cdots \sim \rho_{\theta'}(\tau)}\left[V_{\pi_\theta}(s_0)\right]} \quad \text{where }\rho_{\theta'}(\tau) = h(s_0)\prod_{t=0}^\infty P(s_{t+1}\mid s_t, a_t)\\
+&= \eta(\theta') - {\mathbb{E}_{\tau\sim \rho_{\theta'}(\tau)}\left[\textcolor{green}{\sum_{t=0}^\infty \gamma^t V_{\pi_\theta}(s_t) - \sum_{t=1}^\infty \gamma^t V_{\pi_\theta}(s_t)}\right]}\\
+&= \mathbb{E}_{\tau \sim \rho_{\theta'}(\tau)}\left[\sum_{t=0}^\infty \gamma^t r(s_t, a_t) \right]-\mathbb{E}_{\tau\sim \rho_{\theta'}(\tau)}\left[{\sum_{t=0}^\infty \gamma^t \left(\gamma V_{\pi_\theta}(s_{t+1}) - V_{\pi_\theta}(s_t)\right)}\right]\\
+&= \mathbb{E}_{\tau \sim \rho_{\theta'}(\tau)}\left[\sum_{t=0}^\infty \gamma^t \left(r(s_t, a_t) - \gamma V_{\pi_\theta}(s_{t+1}) - V_{\pi_\theta}(s_t)\right)\right]\\
+&= \mathbb{E}_{\tau \sim \rho_{\theta'}(\tau)}\left[\sum_{t=0}^\infty \gamma^t A_{\pi_\theta}(s_t, a_t)\right]
 \end{align*}
 $$
+
+>- blue : Another fomulation of $\eta(\theta)$ is the expected value of the states sampled from the inital state distribution $h(s_0)$
+>- red : We assume that the initial state distribution is same for the trajectory distribution as well
+>- green : $$\sum_{t=0}^\infty \gamma^t V_{\pi_\theta}(s_t) - \sum_{t=1}^\infty \gamma^t V_{\pi_\theta}(s_t)\\ =  V_{\pi_\theta}(s_0) + \sum_{t=0}^\infty \gamma^t V_{\pi_\theta}(s_t) - \sum_{t=1}^\infty \gamma^t V_{\pi_\theta}(s_t) = V_{\pi_\theta}(s_0)$$
 
 
 
