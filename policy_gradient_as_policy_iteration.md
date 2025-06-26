@@ -180,7 +180,8 @@ So, does this guarantee hold only when we take the exact $\max$? Or is **any** i
 
 To hammer the point home:  
 **Better, not best, is sufficient for improvement !**
-___
+
+---
 
 Let the new policy parameters be $\theta'$ obtained by 
 
@@ -206,4 +207,19 @@ $$
 >- green : $$\sum_{t=0}^\infty \gamma^t V_{\pi_\theta}(s_t) - \sum_{t=1}^\infty \gamma^t V_{\pi_\theta}(s_t)\\ =  V_{\pi_\theta}(s_0) + \sum_{t=0}^\infty \gamma^t V_{\pi_\theta}(s_t) - \sum_{t=1}^\infty \gamma^t V_{\pi_\theta}(s_t) = V_{\pi_\theta}(s_0)$$
 
 
+But have we guaranteed improvement ? Not yet. For improvement, we require the term $\mathbb{E}_{\tau \sim \rho_{\theta'}(\tau)}\left[\sum_{t=0}^\infty \gamma^t A_{\pi_\theta}(s_t, a_t)\right]$ to be positive. 
 
+$$
+\begin{align*}
+\mathbb{E}_{\tau \sim \rho_{\theta'}(\tau)}\left[\sum_{t=0}^\infty \gamma^t A_{\pi_\theta}(s_t, a_t)\right] &> 0\\
+\sum_{t=0}^\infty \gamma^t \mathbb{E}_{\tau \sim \rho_{\theta'}(\tau)}\left[  A_{\pi_\theta}(s_t, a_t)\right] &> 0\\
+\therefore \forall (s,a) \sim P_{\pi_{\theta'}}(s, a), A_{\pi_\theta}(s, a) &> 0\\
+r(s, a) + \gamma V_{\pi_\theta}(s') - V_{\pi_\theta}(s) &> 0\\
+r(s, a) + \gamma V_{\pi_\theta}(s') &> V_{\pi_\theta}(s)
+\end{align*}
+$$
+
+Hence for improvement we must ensure that the action suggested by the new policy yields 
+- better reward for transitioning into a state with equal value or,
+- a state with a better value if not equal or better reward or,
+- the best trivial case when both the reward and the value for transitioning into a new state is better than before.
