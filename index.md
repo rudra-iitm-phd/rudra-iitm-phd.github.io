@@ -59,6 +59,8 @@ Explore key concepts in reinforcement learning, machine learning, and more.
 ## Reinforcement Learning
 > ### [Policy Gradients](policy-gradient.md) 
 > _Appreciating the elegant derivation of the policy gradient theorem with intuitive explanations._
+>### [Policy Gradient as Policy Iteration](policy_gradient_as_policy_iteration.md)
+>_Policy Gradient from the lens of Policy Iteration_
 
 ---
 ## Random thoughts

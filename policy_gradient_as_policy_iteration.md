@@ -33,8 +33,9 @@ layout: default
 In this blog, I’m going to document another interpretation of Policy Gradient in terms of Policy Iteration. To keep this blog short, I’m skipping a lot of fundamentals and will cite resources for readers to refer to wherever necessary. With that, let’s try to look at Policy Gradient from the lens of Policy Iteration.
 
 > **Note:** The reader can refer to Lilian Weng’s blog to check out the fundamentals of Reinforcement Learning[^1] as well as Policy Gradient algorithms[^2]. This blog, however, is based on the Policy Gradient lectures by Sergey Levine[^3]. I also encourage readers not to miss out on the RL book by Sutton and Barto[^4].
-
+---
 ## Policy Iteration
+
 
 Let’s say we have a policy $\pi$ which specifies a distribution over actions $A$={$a_1, \cdots, a_k$} given a state $s \in S$. In other words,
 
@@ -111,6 +112,7 @@ So far, we’ve seen:
 ---
 
 ## Policy Gradient
+
 
 At this point, you might wonder: *Why do we need another method if we already have a proven one?* That’s actually outside the scope of this blog, since it would require bootstrapping a few more topics — but here’s a rough idea.
 
@@ -219,7 +221,7 @@ $$
 > - **green**:
 >   $$\sum_{t=0}^\infty \gamma^t V_{\pi_\theta}(s_t) - \sum_{t=1}^\infty \gamma^t V_{\pi_\theta}(s_t)\\ =  V_{\pi_\theta}(s_0) + \sum_{t=0}^\infty \gamma^t V_{\pi_\theta}(s_t) - \sum_{t=1}^\infty \gamma^t V_{\pi_\theta}(s_t) = V_{\pi_\theta}(s_0)$$
 
-But have we guaranteed improvement? Not yet. For improvement, we require the term $\mathbb{E}_{\tau \sim p_{\theta'}(\tau)} \left[ \sum_{t=0}^\infty \gamma^t A_{\pi_\theta}(s_t, a_t) \right]$ to be positive.
+But have we guaranteed improvement? Not yet. For improvement, we require the expected cumulative discounted advantage to be positive.
 
 $$
 \begin{align*}
