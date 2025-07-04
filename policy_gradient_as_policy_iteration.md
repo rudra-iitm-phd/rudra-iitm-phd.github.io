@@ -32,7 +32,7 @@ layout: default
 
 In this blog, I’m going to document another interpretation of Policy Gradient in terms of Policy Iteration. To keep this blog short, I’m skipping a lot of fundamentals and will cite resources for readers to refer to wherever necessary. With that, let’s try to look at Policy Gradient from the lens of Policy Iteration.
 
-> **Note:** The reader can refer to Lilian Weng’s blog to check out the fundamentals of Reinforcement Learning[^1] as well as Policy Gradient algorithms[^2]. This blog, however, is based on the Policy Gradient lectures by Sergey Levine[^3]. I also encourage readers not to miss out on the RL book by Sutton and Barto[^4].
+> Note: The reader can refer to Lilian Weng’s blog to check out the fundamentals of Reinforcement Learning[^1] as well as Policy Gradient algorithms[^2]. This blog, however, is based on the Policy Gradient lectures by Sergey Levine[^3]. I also encourage readers not to miss out on the RL book by Sutton and Barto[^4].
 ---
 ## Policy Iteration
 
